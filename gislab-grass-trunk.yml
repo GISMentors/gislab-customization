@@ -1,0 +1,25 @@
+- hosts: all
+  sudo: yes
+
+  vars:
+    SERVER_SCRIPT: scripts/grass-trunk-compile.sh
+
+  tasks:
+    # Compile GRASS trunk on server, update clients
+    - name: Copy build script to server
+      copy: src={{ SERVER_SCRIPT }}
+            dest=/tmp/grass-trunk.sh
+            owner=root group=root mode=0755
+
+    - name: Compile GRASS GIS on server
+      shell: /tmp/grass-trunk.sh f
+
+    - name: Remove build script from server
+      file: path=/tmp/grass-trunk.sh
+            state=absent
+
+    - name: Rebuild client image
+      shell: gislab-client-image
+      #      when: lookup('env','GISLAB_GRASS_IMAGE') == 'yes'
+      tags:
+        - image

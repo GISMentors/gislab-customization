@@ -1,0 +1,38 @@
+- hosts: all
+  sudo: yes
+
+  vars:
+    CLIENT_SCRIPT: scripts/client-customize.sh
+    GISLAB_INSTALL_CLIENTS_ROOT: /opt/gislab/system/clients
+
+  tasks:
+    # Customize GIS.lab Desktop client
+    - name: Copy gislab-desktop.desktop to client chroot (QGIS 2.8)
+      copy: src=files/gislab-desktop.desktop
+            dest={{ GISLAB_INSTALL_CLIENTS_ROOT }}/desktop/root/usr/share/applications
+            owner=root group=root mode=0644
+
+    - name: Copy gislab-grass.desktop to client chroot (GRASS 7.1)
+      copy: src=files/gislab-grass.desktop
+            dest={{ GISLAB_INSTALL_CLIENTS_ROOT }}/desktop/root/usr/share/applications
+            owner=root group=root mode=0644
+
+    - name: Copy default.xml to client chroot
+      copy: src=files/default.xml
+            dest={{ GISLAB_INSTALL_CLIENTS_ROOT }}/desktop/root/etc/xdg/xdg-xubuntu/xfce4/panel
+            owner=root group=root mode=0644
+
+    - name: Copy script to client chroot
+      copy: src={{ CLIENT_SCRIPT }}
+            dest={{ GISLAB_INSTALL_CLIENTS_ROOT }}/desktop/root/tmp/customize.sh
+            owner=root group=root mode=0755
+
+    - name: Run script in client chroot
+      shell: gislab-client-shell /tmp/customize.sh
+
+    - name: Remove script from client chroot
+      file: path={{ GISLAB_INSTALL_CLIENTS_ROOT }}/desktop/root/tmp/customize.sh
+            state=absent
+
+    - name: Rebuild client image
+      shell: gislab-client-image

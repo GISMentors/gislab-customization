@@ -1,0 +1,1 @@
+gislab-unit-gismentors ansible_ssh_host=gislab.fsv.cvut.cz ansible_ssh_user=ubuntu
