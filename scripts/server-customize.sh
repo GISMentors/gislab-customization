@@ -107,6 +107,7 @@ gismentors_data() {
     homedir=/mnt/home/gislab
     gitdir="dataset"
     if [ ! -d ${homedir}/${gitdir} ] ; then
+        cd $homedir
         git clone https://github.com/GISMentors/${gitdir}.git
     else
         cd ${homedir}/${gitdir}
