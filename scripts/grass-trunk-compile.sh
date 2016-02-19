@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 TARGET=/opt/gislab/system/clients/desktop/root/usr/local
 VERSION=7.1.svn

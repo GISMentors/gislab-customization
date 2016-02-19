@@ -29,6 +29,9 @@ fi
 ############
 ### QGIS 2.8
 ############
+if [ ! -d /etc/apt/sources.list.d ] ; then
+    mkdir /etc/apt/sources.list.d
+fi
 apt-add-repository --yes ppa:landa-martin/gislab-testing
 apt-get update
 apt-get install --yes --force-yes qgis python-qgis qgis-plugin-grass 
