@@ -14,6 +14,7 @@ apt-get install --no-install-recommends --yes gedit geany sqlitebrowser
 apt-get install --yes python-pip g++ python-dev libgdal-dev python-numpy 
 pip install Fiona
 pip install rasterio
+pip install shapely
 pip install OWSLib
 
 ##########
