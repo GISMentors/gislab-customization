@@ -20,8 +20,18 @@ dir=/mnt/home/gislab
 og=gislab:gislabusers
 if [ ! -d $dir/src ]; then
     mkdir $dir/src
-    cd $dir/src
-    svn co http://svn.osgeo.org/grass/grass/trunk grass_71
+fi
+if [ ! -d $dir/src/grass_71 ] ; then
+    
+    svn co http://svn.osgeo.org/grass/grass/trunk $dir/src/grass_71
+    chown $og $dir/src -R
+fi
+if [ ! -d $dir/src/gdal_20 ] ; then
+    svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $dir/src/gdal_20
+    chown $og $dir/src -R
+fi
+if [ ! -d $dir/src/qgis_214 ] ; then
+    svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $dir/src/qgis_214
     chown $og $dir/src -R
 fi
 

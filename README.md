@@ -15,3 +15,36 @@ GIS.lab: http://web.gislab.io/
         ansible-playbook -inventory-file=gislab-unit-gismentors.inventory \
         --private-key=/path/to/your/private/key \
         gislab-client-customize.yml
+
+## Packaging Notes
+
+See https://github.com/imincik/imincik-pkg-doc
+
+    OTHERMIRROR="deb http://ppa.launchpad.net/imincik/general/ubuntu $DIST main | deb http://ppa.launchpad.net/imincik/gis-dev/ubuntu $DIST main | deb http://ppa.launchpad.net/landa-martin/gislab-gismentors/ubuntu $DIST main "
+    
+    export DIST=precise
+    sudo -E cowbuilder --create --distribution=$DIST --basepath=/var/cache/pbuilder/base-${DIST}-gislab.cow --save-after-login
+
+### GDAL 2.0
+
+    git clone http://anonscm.debian.org/cgit/pkg-grass/gdal.git pkg-gdal
+    cd pkg-gdal
+    git checkout -b gislab origin/experimental-2.0
+    sed -i 's/experimental-2.0/gislab/g' debian/gbp.conf
+    dch -v 2.0.2-1~precise1
+    git commit -am"GIS.lab release"
+    gbp buildpackage -d -S -sa --git-pbuilder --git-dist=precise-gislab --git-ignore-new
+    debsign ../gdal_2.0.2+dfsg-1~precise1_source.changes
+    dput ppa:landa-martin/gislab-gismentors ../gdal_2.0.2+dfsg-1~precise1_source.changes
+
+### GRASS GIS 7.1
+
+    git clone http://anonscm.debian.org/cgit/pkg-grass/grass.git pkg-grass
+    cp pkg-grass
+    
+### QGIS 2.14
+
+    git clone http://anonscm.debian.org/cgit/pkg-grass/qgis.git pkg-qgis
+    cd pkg-qgis
+    git checkout -b gislab origin/upstream-ltr
+    dch -v 2.14.0+dfsg-1~precise1
