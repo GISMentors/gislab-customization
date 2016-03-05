@@ -34,7 +34,7 @@ if [ ! -d /etc/apt/sources.list.d ] ; then
     mkdir /etc/apt/sources.list.d
 fi
 # apt-add-repository --yes ppa:landa-martin/gislab-testing (QGIS 2.8)
-apt-add-repository --yes ppa:landa-martin/gislab-gismentors (QGIS 2.14 + GDAL 2.0)
+apt-add-repository --yes ppa:landa-martin/gislab-gismentors # (QGIS 2.14 + GDAL 2.0)
 apt-get update
 apt-get install --yes --force-yes libgdal20 gdal-bin python-gdal
 #apt-get install --yes --force-yes qgis python-qgis qgis-plugin-grass

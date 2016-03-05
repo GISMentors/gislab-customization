@@ -39,9 +39,6 @@ See https://github.com/imincik/imincik-pkg-doc
 
 ### GRASS GIS 7.1
 
-    git clone http://anonscm.debian.org/cgit/pkg-grass/grass.git pkg-grass
-    cp pkg-grass
-    
 ### QGIS 2.14
 
     git clone http://anonscm.debian.org/cgit/pkg-grass/qgis.git pkg-qgis

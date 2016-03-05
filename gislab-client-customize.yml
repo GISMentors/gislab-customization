@@ -34,5 +34,5 @@
       file: path={{ GISLAB_INSTALL_CLIENTS_ROOT }}/desktop/root/tmp/customize.sh
             state=absent
 
-    # - name: Rebuild client image
-    #   shell: gislab-client-image
+    - name: Rebuild client image
+      shell: gislab-client-image
