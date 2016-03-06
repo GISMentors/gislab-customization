@@ -25,6 +25,17 @@ See https://github.com/imincik/imincik-pkg-doc
     export DIST=precise
     sudo -E cowbuilder --create --distribution=$DIST --basepath=/var/cache/pbuilder/base-${DIST}-gislab.cow --save-after-login
 
+### GEOS 3.5.0
+
+    git clone http://anonscm.debian.org/cgit/pkg-grass/geos.git pkg-geos
+    cd pkg-geos
+    git checkout -b gislab origin/experimental
+    dch -v 3.5.0-2~precise1
+    git commit -am"GIS.lab release"
+    gbp buildpackage -d -S -sa --git-pbuilder --git-dist=precise-gislab --git-ignore-new
+    debsign ../geos_3.5.0-2~precise1_source.changes
+    dput ppa:landa-martin/gislab-gismentors ../geos_3.5.0-2~precise1_source.changes
+    
 ### GDAL 2.0
 
     git clone http://anonscm.debian.org/cgit/pkg-grass/gdal.git pkg-gdal
@@ -45,3 +56,6 @@ See https://github.com/imincik/imincik-pkg-doc
     cd pkg-qgis
     git checkout -b gislab origin/upstream-ltr
     dch -v 2.14.0+dfsg-1~precise1
+    git commit -am"GIS.lab release"
+    debuild -S -sa -i -I
+    dput ppa:landa-martin/gislab-gismentors ../qgis_2.14.0+dfsg-1~precise1_source.changes

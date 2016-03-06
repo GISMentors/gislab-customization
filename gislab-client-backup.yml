@@ -1,0 +1,18 @@
+- hosts: all
+  sudo: yes
+
+  vars:
+    SCRIPT: scripts/client-backup.sh
+
+  tasks:
+    - name: Copy script to server
+      copy: src={{ SCRIPT }}
+            dest=/tmp/backup.sh
+            owner=root group=root mode=0755
+
+    - name: Run script
+      shell: /tmp/backup.sh
+
+    - name: Remove script from server
+      file: path=/tmp/backup.sh
+            state=absent
