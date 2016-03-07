@@ -68,6 +68,8 @@ gismentors_db() {
     schema_priv rastry gislabusers
     schema_priv ruian gislabusers
     schema_priv ruian_praha gislabusers
+    schema_priv csu_sldb gislabusers
+    schema_priv slhp gislabusers
     
     revoke_priv gislabusers
 }
