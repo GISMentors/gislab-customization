@@ -70,6 +70,7 @@ gismentors_db() {
     schema_priv ruian_praha gislabusers
     schema_priv csu_sldb gislabusers
     schema_priv slhp gislabusers
+    schema_priv ochrana_uzemi gislabusers
     
     revoke_priv gislabusers
 }
