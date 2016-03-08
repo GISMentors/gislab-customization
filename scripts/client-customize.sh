@@ -17,6 +17,11 @@ pip install rasterio
 pip install shapely
 pip install OWSLib
 
+##########################
+### PostGIS (common files)
+##########################
+apt-get install --yes postgis
+
 ##########
 ### Nvidia
 ##########
@@ -33,13 +38,16 @@ fi
 if [ ! -d /etc/apt/sources.list.d ] ; then
     mkdir /etc/apt/sources.list.d
 fi
-### apt-add-repository --yes ppa:landa-martin/gislab-testing (QGIS 2.8)
-apt-add-repository --yes ppa:landa-martin/gislab-gismentors # (QGIS 2.14 + GDAL 2.0)
+apt-add-repository --yes ppa:landa-martin/gislab-testing (QGIS 2.8)
+### apt-add-repository --yes ppa:landa-martin/gislab-gismentors # (QGIS 2.14 + GDAL 2.0)
+### apt-get install --yes --force-yes libgdal20 gdal-bin python-gdal
 apt-get update
-apt-get install --yes --force-yes libgdal20 gdal-bin python-gdal
-#apt-get install --yes --force-yes qgis python-qgis qgis-plugin-grass
+apt-get install --yes --force-yes qgis python-qgis qgis-plugin-grass
+apt-get --yes --force-yes autoremove
 
-### tmp fix (https://github.com/imincik/gis-lab/issues/402)
+#######################################################
+### Fix (https://github.com/imincik/gis-lab/issues/402)
+#######################################################
 apt-get install --yes --force-yes lightdm-gtk-greeter=1.1.5-0ubuntu1
 pip install numpy==1.8
 
