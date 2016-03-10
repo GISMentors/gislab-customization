@@ -1,6 +1,16 @@
 #!/bin/sh
 set -e
 
+homedir=/mnt/home/gislab
+gitdir="dataset"
+if [ ! -d ${homedir}/${gitdir} ] ; then
+    cd $homedir
+    git clone https://github.com/GISMentors/${gitdir}.git
+else
+    cd ${homedir}/${gitdir}
+    git pull
+fi
+
 #######################
 ### Change SSH port ###
 #######################
@@ -16,23 +26,22 @@ set -e
 apt-get install --yes flex bison libproj-dev libtiff-dev mesa-common-dev libglu1-mesa-dev libfftw3-dev libblas-dev liblapack-dev \
     libcairo-dev proj-bin libgdal1-dev libwxbase2.8-dev git gettext subversion emacs23-nox g++ python-numpy gdal-bin make
 
-dir=/mnt/home/gislab
 og=gislab:gislabusers
-if [ ! -d $dir/src ]; then
-    mkdir $dir/src
+if [ ! -d $homedir/src ]; then
+    mkdir $homedir/src
 fi
-if [ ! -d $dir/src/grass_71 ] ; then
+if [ ! -d $homedir/src/grass_71 ] ; then
     
-    svn co http://svn.osgeo.org/grass/grass/trunk $dir/src/grass_71
-    chown $og $dir/src -R
+    svn co http://svn.osgeo.org/grass/grass/trunk $homedir/src/grass_71
+    chown $og $homedir/src -R
 fi
-if [ ! -d $dir/src/gdal_20 ] ; then
-    svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $dir/src/gdal_20
-    chown $og $dir/src -R
+if [ ! -d $homedir/src/gdal_20 ] ; then
+    svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $homedir/src/gdal_20
+    chown $og $homedir/src -R
 fi
-if [ ! -d $dir/src/qgis_214 ] ; then
-    svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $dir/src/qgis_214
-    chown $og $dir/src -R
+if [ ! -d $homedir/src/qgis_214 ] ; then
+    svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $homedir/src/qgis_214
+    chown $og $homedir/src -R
 fi
 
 schema_priv() {
@@ -61,6 +70,7 @@ gismentors_db() {
     fi
     createdb -U postgres $db
     pg_restore /mnt/repository/$db.dump | psql -U postgres $db
+    ${homedir}/${gitdir}/postgis/epsg-5514.sh
     
     schema_priv public gislabusers
     schema_priv dibavod gislabusers
@@ -117,16 +127,6 @@ gismentors_grass
 ### GISMentors data
 ###################
 gismentors_data() {
-    homedir=/mnt/home/gislab
-    gitdir="dataset"
-    if [ ! -d ${homedir}/${gitdir} ] ; then
-        cd $homedir
-        git clone https://github.com/GISMentors/${gitdir}.git
-    else
-        cd ${homedir}/${gitdir}
-        git pull
-    fi
-    
     datadir=/mnt/repository/gismentors
     rm -rf $datadir && mkdir $datadir
     
