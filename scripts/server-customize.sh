@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+apt-get install --yes git
+
 homedir=/mnt/home/gislab
 gitdir="dataset"
 if [ ! -d ${homedir}/${gitdir} ] ; then
