@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-apt-get install --yes git emacs23-nox
+apt-get install --yes git emacs23-nox gdal-bin
 
 homedir=/mnt/home/gislab
 gitdir="dataset"
