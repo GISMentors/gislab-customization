@@ -23,26 +23,26 @@ fi
 #################################
 ### GRASS compilation dependecies
 #################################
-apt-get install --yes flex bison libproj-dev libtiff-dev mesa-common-dev libglu1-mesa-dev libfftw3-dev libblas-dev liblapack-dev \
-    libcairo-dev proj-bin libgdal1-dev libwxbase2.8-dev git gettext subversion emacs23-nox g++ python-numpy gdal-bin make
+#apt-get install --yes flex bison libproj-dev libtiff-dev mesa-common-dev libglu1-mesa-dev libfftw3-dev libblas-dev liblapack-dev \
+#    libcairo-dev proj-bin libgdal1-dev libwxbase2.8-dev git gettext subversion emacs23-nox g++ python-numpy gdal-bin make
 
-og=gislab:gislabusers
-if [ ! -d $homedir/src ]; then
-    mkdir $homedir/src
-fi
-if [ ! -d $homedir/src/grass_71 ] ; then
+# og=gislab:gislabusers
+# if [ ! -d $homedir/src ]; then
+#     mkdir $homedir/src
+# fi
+# if [ ! -d $homedir/src/grass_71 ] ; then
     
-    svn co http://svn.osgeo.org/grass/grass/trunk $homedir/src/grass_71
-    chown $og $homedir/src -R
-fi
-if [ ! -d $homedir/src/gdal_20 ] ; then
-    svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $homedir/src/gdal_20
-    chown $og $homedir/src -R
-fi
-if [ ! -d $homedir/src/qgis_214 ] ; then
-    svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $homedir/src/qgis_214
-    chown $og $homedir/src -R
-fi
+#     svn co http://svn.osgeo.org/grass/grass/trunk $homedir/src/grass_71
+#     chown $og $homedir/src -R
+# fi
+# if [ ! -d $homedir/src/gdal_20 ] ; then
+#     svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $homedir/src/gdal_20
+#     chown $og $homedir/src -R
+# fi
+# if [ ! -d $homedir/src/qgis_214 ] ; then
+#     svn co https://svn.osgeo.org/gdal/branches/2.0/gdal/ $homedir/src/qgis_214
+#     chown $og $homedir/src -R
+# fi
 
 schema_priv() {
     psql -U postgres $db -c "GRANT USAGE on SCHEMA $1 to $2"
