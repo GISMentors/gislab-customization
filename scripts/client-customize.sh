@@ -29,7 +29,7 @@ is_unit=`grep GISLAB_UNIQUE_ID /etc/gislab_version | grep gislab-unit | wc -l`
 if [ $is_unit -eq 1 ] ; then
     apt-add-repository --yes ppa:ubuntu-x-swat/x-updates
     apt-get update
-    apt-get install --yes nvidia-319 nvidia-settings
+    apt-get install --yes nvidia-settings-319 nvidia-settings
 fi
 
 ############
@@ -38,7 +38,7 @@ fi
 if [ ! -d /etc/apt/sources.list.d ] ; then
     mkdir /etc/apt/sources.list.d
 fi
-apt-add-repository --yes ppa:landa-martin/gislab-testing (QGIS 2.8)
+apt-add-repository --yes ppa:landa-martin/gislab-testing # (QGIS 2.8)
 ### apt-add-repository --yes ppa:landa-martin/gislab-gismentors # (QGIS 2.14 + GDAL 2.0)
 ### apt-get install --yes --force-yes libgdal20 gdal-bin python-gdal
 apt-get update
