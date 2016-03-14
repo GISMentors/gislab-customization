@@ -50,21 +50,6 @@ See https://github.com/imincik/imincik-pkg-doc
 
 ### GRASS GIS 7.1
 
-### QGIS 2.8
-
-    git clone https://github.com/qgis/QGIS.git
-    git checkout release-2_8
-    QGISVERSION=2.8.7
-    DATE=$(date +%Y%m%d)
-    CHANGESET=$(git rev-parse --short HEAD)
-    DEBVERSION=+git$DATE~$CHANGESET~precise
-
-    dch --newversion "${QGISVERSION}-1${DEBVERSION}1" "New release."
-    git add debian/changelog
-    git commit -m "Debian changelog update."
-    debuild -S -sa -i -I
-    dput ppa:landa-martin/gislab-gismentors ../qgis_${QGISVERSION}-1${DEBVERSION}1_source.changes
-    
 ### QGIS 2.14
 
     git clone http://anonscm.debian.org/cgit/pkg-grass/qgis.git pkg-qgis
@@ -74,3 +59,23 @@ See https://github.com/imincik/imincik-pkg-doc
     git commit -am"GIS.lab release"
     debuild -S -sa -i -I
     dput ppa:landa-martin/gislab-gismentors ../qgis_2.14.0+dfsg-1~precise1_source.changes
+
+or
+
+    git clone https://github.com/qgis/QGIS.git
+    cd QGIS
+    git checkout release-2_8
+
+    QGISVERSION=2.8.7
+
+    DATE=$(date +%Y%m%d)
+    CHANGESET=$(git rev-parse --short HEAD)
+    DEBVERSION=+git$DATE~$CHANGESET~precise
+
+    dch --newversion "${QGISVERSION}-1${DEBVERSION}1" "New release."
+    git add debian/changelog
+    git ci -m "Debian changelog update."
+
+    debuild -S -sa -i -I
+    dput ppa:landa-martin/gislab-testing ../qgis_${QGISVERSION}-1${DEBVERSION}1_source.changes
+    
