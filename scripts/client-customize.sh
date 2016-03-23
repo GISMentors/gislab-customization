@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 set -e
 
 ##########################
@@ -32,23 +32,33 @@ if [ $is_unit -eq 1 ] ; then
     apt-get install --yes nvidia-settings-319 nvidia-settings
 fi
 
-############
-### QGIS 2.8
-############
+###############
+### GIS.lab PPA
+###############
 if [ ! -d /etc/apt/sources.list.d ] ; then
     mkdir /etc/apt/sources.list.d
 fi
 apt-add-repository --yes ppa:landa-martin/gislab-testing # (QGIS 2.8)
 ### apt-add-repository --yes ppa:landa-martin/gislab-gismentors # (QGIS 2.14 + GDAL 2.0)
-### apt-get install --yes --force-yes libgdal20 gdal-bin python-gdal
 apt-get update
+
+############
+### QGIS 2.8
+############
+### apt-get install --yes --force-yes libgdal20 gdal-bin python-gdal
 apt-get install --yes --force-yes qgis python-qgis qgis-plugin-grass
-apt-get --yes --force-yes autoremove
+
+#################
+### GRASS GIS 7.1
+#################
+apt-get install --yes --force-yes grass-daily
 
 #######################################################
 ### Fix (https://github.com/imincik/gis-lab/issues/402)
 #######################################################
 apt-get install --yes --force-yes lightdm-gtk-greeter=1.1.5-0ubuntu1
 pip install numpy==1.8
+
+apt-get --yes --force-yes autoremove
 
 exit 0

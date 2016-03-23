@@ -50,6 +50,20 @@ See https://github.com/imincik/imincik-pkg-doc
 
 ### GRASS GIS 7.1
 
+    mkdir pkg-grass
+    dget https://launchpad.net/~grass/+archive/ubuntu/grass-devel/+files/grass-daily_7.1.svn-1-r68124~ubuntu12.04.1.dsc
+    wget https://launchpad.net/~grass/+archive/ubuntu/grass-devel/+files/grass-daily_7.1.svn-1-r68124~ubuntu12.04.1.tar.gz
+    cd pkg-grass
+    git init
+        
+    gbp import-dsc ../grass-daily_7.1.svn-1-r68124~ubuntu12.04.1.dsc
+    gbp import-orig ../grass-daily_7.1.svn-1-r68124~ubuntu12.04.1.tar.gz
+    emacs debian/changelog -nw
+    git commit -am"GIS.lab release"
+    gbp buildpackage -d -S -sa --git-pbuilder --git-dist=precise-gislab --git-ignore-new
+    debsign ../grass-daily_7.1.svn-1-r68124~ubuntu12.04.1_source.changes
+    dput ppa:landa-martin/gislab-testing ../grass-daily_7.1.svn-1-r68124~ubuntu12.04.1_source.changes
+
 ### QGIS 2.14
 
     git clone http://anonscm.debian.org/cgit/pkg-grass/qgis.git pkg-qgis
