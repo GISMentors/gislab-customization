@@ -2,20 +2,20 @@
   sudo: yes
 
   vars:
-    SERVER_SCRIPT: scripts/grass-trunk-compile.sh
+    SERVER_SCRIPT: scripts/server-compile.sh
 
   tasks:
-    # Compile GRASS trunk on server, update clients
+    # Compile GRASS 7.1 + GDAL 2.0 + QGIS 2.14 on server
     - name: Copy build script to server
       copy: src={{ SERVER_SCRIPT }}
-            dest=/tmp/grass-trunk.sh
+            dest=/tmp/compile.sh
             owner=root group=root mode=0755
 
-    - name: Compile GRASS GIS on server
-      shell: /tmp/grass-trunk.sh
+    - name: Run compilation
+      shell: /tmp/compile.sh
 
     - name: Remove build script from server
-      file: path=/tmp/grass-trunk.sh
+      file: path=/tmp/compile.sh
             state=absent
 
     # - name: Rebuild client image

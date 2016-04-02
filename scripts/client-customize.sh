@@ -45,19 +45,15 @@ apt-get update
 ############
 ### QGIS 2.8
 ############
-### apt-get install --yes --force-yes libgdal20 gdal-bin python-gdal
+### apt-get install --yes --force-yes libgdal20 gdal-bin python-gdal libgeos-3.5.0
 apt-get install --yes --force-yes qgis python-qgis qgis-plugin-grass
-
-#################
-### GRASS GIS 7.1
-#################
-apt-get install --yes --force-yes grass-daily
 
 #######################################################
 ### Fix (https://github.com/imincik/gis-lab/issues/402)
 #######################################################
 apt-get install --yes --force-yes lightdm-gtk-greeter=1.1.5-0ubuntu1
 pip install numpy==1.8
+apt-get install libqca2 python-qt4-sql # QGIS 2.14
 
 apt-get --yes --force-yes autoremove
 

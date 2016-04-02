@@ -32,7 +32,7 @@ See https://github.com/imincik/imincik-pkg-doc
     git checkout -b gislab origin/experimental
     dch -v 3.5.0-2~precise1
     git commit -am"GIS.lab release"
-    gbp buildpackage -d -S -sa --git-pbuilder --git-dist=precise-gislab --git-ignore-new
+    gbp buildpackage -d -S -sa --git-pbuilder --git-dist=precise-gislab-gismentors --git-ignore-new
     debsign ../geos_3.5.0-2~precise1_source.changes
     dput ppa:landa-martin/gislab-gismentors ../geos_3.5.0-2~precise1_source.changes
     
@@ -44,25 +44,26 @@ See https://github.com/imincik/imincik-pkg-doc
     sed -i 's/experimental-2.0/gislab/g' debian/gbp.conf
     dch -v 2.0.2-1~precise1
     git commit -am"GIS.lab release"
-    gbp buildpackage -d -S -sa --git-pbuilder --git-dist=precise-gislab --git-ignore-new
+    gbp buildpackage -d -S -sa --git-pbuilder --git-dist=precise-gislab-gismentors --git-ignore-new
     debsign ../gdal_2.0.2+dfsg-1~precise1_source.changes
     dput ppa:landa-martin/gislab-gismentors ../gdal_2.0.2+dfsg-1~precise1_source.changes
 
 ### GRASS GIS 7.1
 
+    export REV=r68175
+    
     mkdir pkg-grass
-    dget https://launchpad.net/~grass/+archive/ubuntu/grass-devel/+files/grass-daily_7.1.svn-1-r68124~ubuntu12.04.1.dsc
-    wget https://launchpad.net/~grass/+archive/ubuntu/grass-devel/+files/grass-daily_7.1.svn-1-r68124~ubuntu12.04.1.tar.gz
+    dget https://launchpad.net/~grass/+archive/ubuntu/grass-devel/+files/grass-daily_7.1.svn-1-${REV}~ubuntu12.04.1.dsc
     cd pkg-grass
     git init
         
-    gbp import-dsc ../grass-daily_7.1.svn-1-r68124~ubuntu12.04.1.dsc
-    gbp import-orig ../grass-daily_7.1.svn-1-r68124~ubuntu12.04.1.tar.gz
+    gbp import-dsc ../grass-daily_7.1.svn-1-${REV}~ubuntu12.04.1.dsc
+    gbp import-orig ../grass-daily_7.1.svn-1-${REV}~ubuntu12.04.1.tar.gz
     emacs debian/changelog -nw
     git commit -am"GIS.lab release"
-    gbp buildpackage -d -S -sa --git-pbuilder --git-dist=precise-gislab --git-ignore-new
-    debsign ../grass-daily_7.1.svn-1-r68124~ubuntu12.04.1_source.changes
-    dput ppa:landa-martin/gislab-testing ../grass-daily_7.1.svn-1-r68124~ubuntu12.04.1_source.changes
+    gbp buildpackage -d -S -sa --git-pbuilder --git-dist=precise-gislab-gismentors --git-ignore-new
+    debsign ../grass-daily_7.1.svn-2-${REV}~ubuntu12.04.1_source.changes
+    dput ppa:landa-martin/gislab-gismentors ../grass-daily_7.1.svn-2-${REV}~ubuntu12.04.1_source.changes
 
 ### QGIS 2.14
 
