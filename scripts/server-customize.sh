@@ -146,17 +146,19 @@ gismentors_data() {
     if [ ! -f dmt.tif ] ; then
         wget http://training.gismentors.eu/geodata/eu-dem/dmt.zip
         unzip dmt.zip
+        rm dmt.zip
     fi
 
     if [ ! -d txt ] ; then
-        mkdir txt && cd txt
-        wget https://github.com/GISMentors/qgis-zacatecnik/files/39270/export.txt
-        wget https://github.com/GISMentors/qgis-zacatecnik/files/39271/xy_data.txt
+        (mkdir txt && cd txt;
+        wget https://github.com/GISMentors/qgis-zacatecnik/files/39270/export.txt;
+        wget https://github.com/GISMentors/qgis-zacatecnik/files/39271/xy_data.txt)
     fi
 
     if [ ! -f WP_20160403.tar.bz2 ] ; then
         wget https://github.com/GISMentors/dataset/raw/master/foto/WP_20160403.tar.bz2
         tar xjf WP_20160403.tar.bz2
+        rm WP_20160403.tar.bz2
     fi
 }
 
