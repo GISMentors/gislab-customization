@@ -124,7 +124,7 @@ gismentors_data() {
     fi
 
     if [ ! -f WP_20160403.tar.bz2 ] ; then
-        wget https://github.com/GISMentors/dataset/blob/master/foto/WP_20160403.tar.bz2
+        wget https://github.com/GISMentors/dataset/raw/master/foto/WP_20160403.tar.bz2
         tar xjf WP_20160403.tar.bz2
     fi
 }
