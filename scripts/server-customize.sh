@@ -51,15 +51,7 @@ if [ ! -d $homedir/src/proj_49 ] ; then
     git clone https://github.com/OSGeo/proj.4.git $homedir/src/proj_49
     (cd $homedir/src/qgis_214 && git branch 4.9 origin/4.9 && git checkout 4.9)
 fi
-if [ ! -d $homedir/src/cmake_35 ] ; then
-    git clone https://cmake.org/cmake.git $homedir/src/cmake_35
-    (cd $homedir/src/cmake_35 && git branch maint origin/maint && git checkout maint)
-fi
 chown gislab:gislabusers $homedir/src -R
-
-# CMake 3.5 fix
-apt-get remove cmake cmake-data
-ldconfig
 
 schema_priv() {
     psql -U postgres $db -c "GRANT USAGE on SCHEMA $1 to $2"
