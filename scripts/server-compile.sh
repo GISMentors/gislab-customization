@@ -58,12 +58,13 @@ qgis() {
     rm -rf build
     mkdir build
     cd build
-    cmake -D GRASS_PREFIX7=$TARGET/grass-$GRASS_VERSION \
+    # export CMAKE_ROOT=/usr/local/share/cmake-3.5
+    cmake -D GRASS_PREFIX7=$TARGET/lib/grass-$GRASS_VERSION \
           -D WITH_BINDINGS=ON \
           -D WITH_GRASS7=ON \
           -D QT_QMAKE_EXECUTABLE=/usr/share/qt4/bin/qmake \
 	  -D CMAKE_BUILD_TYPE=Release \
-	  -D WITH_STAGED_PLUGINS=FALSE \
+	  -D WITH_SPATIALITE=ON \
 	  -D CMAKE_INSTALL_PREFIX=$TARGET \
 	  ..
     make -j2
@@ -79,13 +80,6 @@ proj() {
     make install
 }
 
-cmake() {
-    cd /mnt/home/gislab/src/cmake_35
-    ./configure --prefix=/usr/local
-    make -j2
-    make install
-}
-
 proj /usr/local
 proj $TARGET
 gdal /usr/local
@@ -93,7 +87,6 @@ gdal $TARGET
 geos /usr/local
 geos $TARGET
 grass
-cmake
 qgis
 
 ldconfig
