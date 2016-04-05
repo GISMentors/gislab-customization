@@ -161,6 +161,11 @@ gismentors_data() {
         wget https://github.com/GISMentors/qgis-zacatecnik/files/39270/export.txt
         wget https://github.com/GISMentors/qgis-zacatecnik/files/39271/xy_data.txt
     fi
+
+    if [ ! -f WP_20160403.tar.bz2 ] ; then
+        wget https://github.com/GISMentors/dataset/raw/master/foto/WP_20160403.tar.bz2
+        tar xjf WP_20160403.tar.bz2
+    fi
 }
 
 gismentors_data
