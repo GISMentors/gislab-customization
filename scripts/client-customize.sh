@@ -11,7 +11,7 @@ apt-get install --no-install-recommends --yes gedit geany sqlitebrowser
 ###############
 ### Python libs
 ###############
-apt-get install --yes python-pip g++ python-dev libgdal-dev python-numpy 
+apt-get install --yes python-pip g++ python-dev libgdal-dev python-numpy python-rpy2
 pip install Fiona
 pip install rasterio
 pip install shapely
