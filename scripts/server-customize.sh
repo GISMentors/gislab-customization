@@ -109,7 +109,7 @@ gismentors_grass() {
 	unzip gismentors-landsat.zip  
     fi
 
-    cd /opt/gislab/system/accounts/skel/.grassdata/
+    cd /opt/gislab/system/accounts/skel/grassdata/
     rm -rf gismentors
     mkdir gismentors
     cd gismentors
