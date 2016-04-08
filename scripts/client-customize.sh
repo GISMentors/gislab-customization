@@ -22,6 +22,11 @@ pip install OWSLib
 ##########################
 apt-get install --yes postgis
 
+##########################
+### SAGA
+##########################
+apt-get install --yes saga
+
 ##########
 ### Nvidia
 ##########
