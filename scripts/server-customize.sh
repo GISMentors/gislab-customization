@@ -28,7 +28,7 @@ fi
 apt-get install --yes flex bison libproj-dev libtiff-dev mesa-common-dev libglu1-mesa-dev libfftw3-dev libblas-dev liblapack-dev \
 	libcairo-dev proj-bin libgdal1-dev libwxbase2.8-dev git gettext subversion emacs23-nox g++ python-numpy gdal-bin make cmake \
 	libqt4-dev libqca2-dev libqca2-plugin-ossl python-qt4-dev python-qt4 libqscintilla2-dev pyqt4-dev-tools libgsl0-dev libqwt5-qt4-dev \
-	libspatialindex-dev autoconf
+	libspatialindex-dev autoconf saga
 
 if [ ! -d $homedir/src ]; then
     mkdir $homedir/src
@@ -49,7 +49,7 @@ if [ ! -d $homedir/src/qgis_214 ] ; then
 fi
 if [ ! -d $homedir/src/proj_49 ] ; then
     git clone https://github.com/OSGeo/proj.4.git $homedir/src/proj_49
-    (cd $homedir/src/qgis_214 && git branch 4.9 origin/4.9 && git checkout 4.9)
+    (cd $homedir/src/proj_49 && git branch 4.9 origin/4.9 && git checkout 4.9)
 fi
 chown gislab:gislabusers $homedir/src -R
 

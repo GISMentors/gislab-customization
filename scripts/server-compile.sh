@@ -8,9 +8,7 @@ GRASS_MAJOR=71
 grass() {
     cd /mnt/home/gislab/src/grass_$GRASS_MAJOR
     svn up
-#    if [ -f include/Make/Platform.make ] ; then
-#	make distclean
-#    fi
+    make distclean
     ./configure \
 	--prefix=/usr/local \
 	--with-postgres --with-postgres-includes=/usr/include/postgresql \
@@ -37,6 +35,7 @@ grass() {
 gdal() {
     cd /mnt/home/gislab/src/gdal_20
     svn up
+    make distclean
     ./configure --prefix=$1 --with-sqlite3 \
 		--with-grass=$TARGET/grass-$GRASS_VERSION \
                 --with-spatialite
@@ -48,6 +47,7 @@ geos() {
     cd /mnt/home/gislab/src/geos_35
     svn up
     ./autogen.sh
+    make distclean
     ./configure --prefix=$1
     make -j2
     make install
@@ -58,13 +58,11 @@ qgis() {
     rm -rf build
     mkdir build
     cd build
-    # export CMAKE_ROOT=/usr/local/share/cmake-3.5
     cmake -D GRASS_PREFIX7=$TARGET/lib/grass-$GRASS_VERSION \
           -D WITH_BINDINGS=ON \
           -D WITH_GRASS7=ON \
           -D QT_QMAKE_EXECUTABLE=/usr/share/qt4/bin/qmake \
 	  -D CMAKE_BUILD_TYPE=Release \
-	  -D WITH_SPATIALITE=ON \
 	  -D CMAKE_INSTALL_PREFIX=$TARGET \
 	  ..
     make -j2
@@ -75,6 +73,7 @@ proj() {
     cd /mnt/home/gislab/src/proj_49
     git pull
     ./autogen.sh
+    make distclean
     ./configure --prefix=$1
     make -j2
     make install
