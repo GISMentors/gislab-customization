@@ -68,6 +68,11 @@ qgis() {
 	  ..
     make -j2
     make install
+
+    if [ ! -f /usr/lib/cgi-bin/qgis_mapserv.fcgi.old ] ; then
+        sudo mv /usr/lib/cgi-bin/qgis_mapserv.fcgi /usr/lib/cgi-bin/qgis_mapserv.fcgi.old
+    fi
+    sudo mv /opt/gislab/system/clients/desktop/root/usr/local/bin/qgis_mapserv.fcgi /usr/lib/cgi-bin/qgis_mapserv.fcgi
 }
 
 proj() {
