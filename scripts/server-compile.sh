@@ -64,6 +64,7 @@ qgis() {
           -D QT_QMAKE_EXECUTABLE=/usr/share/qt4/bin/qmake \
 	  -D CMAKE_BUILD_TYPE=Release \
 	  -D CMAKE_INSTALL_PREFIX=$TARGET \
+          -D WITH_SERVER=ON \
 	  ..
     make -j2
     make install
