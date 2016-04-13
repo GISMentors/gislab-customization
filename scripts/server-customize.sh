@@ -117,6 +117,9 @@ gismentors_data() {
         unzip dmt.zip
         rm dmt.zip
     fi
+    if [ ! -f dmt100.tif ] ; then
+        gdalwarp -t_srs EPSG:5514 -r cubic -tr 100 100 dmt.tif dmt100.tif
+    fi
 
     if [ ! -d txt ] ; then
         (mkdir txt && cd txt;
