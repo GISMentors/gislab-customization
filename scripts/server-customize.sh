@@ -138,6 +138,18 @@ gismentors_data() {
         tar xvf vusc_krim.tar.gz
         rm vusc_krim.tar.gz
     fi
+
+    if [ ! -d dopr_znaceni ] ; then
+        wget https://github.com/GISMentors/dataset/raw/master/odvozena_data/dopr_znaceni.tar.gz
+        tar xzf dopr_znaceni.tar.gz
+        rm dopr_znaceni.tar.gz
+    fi
+
+    if [ ! -d rastry_georef ] ; then
+        wget https://github.com/GISMentors/dataset/raw/master/odvozena_data/rastry_georef.tar.gz
+        tar xzf rastry_georef.tar.gz
+        rm rastry_georef.tar.gz
+    fi
 }
 
 gismentors_data
