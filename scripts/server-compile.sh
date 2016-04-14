@@ -58,7 +58,7 @@ qgis() {
     rm -rf build
     mkdir build
     cd build
-    cmake -D GRASS_PREFIX7=$TARGET/lib/grass-$GRASS_VERSION \
+    cmake -D GRASS_PREFIX7=$TARGET/grass-$GRASS_VERSION \
           -D WITH_BINDINGS=ON \
           -D WITH_GRASS7=ON \
           -D QT_QMAKE_EXECUTABLE=/usr/share/qt4/bin/qmake \
