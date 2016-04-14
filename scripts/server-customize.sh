@@ -127,10 +127,16 @@ gismentors_data() {
         wget https://github.com/GISMentors/qgis-zacatecnik/files/39271/xy_data.txt)
     fi
 
-    if [ ! -f WP_20160403.tar.bz2 ] ; then
-        wget https://github.com/GISMentors/dataset/raw/master/foto/WP_20160403.tar.bz2
+    if [ ! -d foto ] ; then
+        wget https://github.com/GISMentors/dataset/raw/master/odvozena_data/WP_20160403.tar.bz2
         tar xjf WP_20160403.tar.bz2
         rm WP_20160403.tar.bz2
+    fi
+
+    if [ ! -d krim ] ; then
+        wget https://github.com/GISMentors/dataset/raw/master/odvozena_data/vusc_krim.tar.gz
+        tar xvf vusc_krim.tar.gz
+        rm vusc_krim.tar.gz
     fi
 }
 
