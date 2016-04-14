@@ -5,35 +5,7 @@
     SERVER_SCRIPT: scripts/server-customize.sh
 
   tasks:
-    # Customize GIS.lab Server
-    - name: Copy customization script to server
-      copy: src={{ SERVER_SCRIPT }}
-            dest=/tmp/customize.sh
-            owner=root group=root mode=0755
-
-    - name: Copy after-add (db) script to server
-      copy: src=scripts/after-add-db.sh
-            dest=/opt/gislab/custom/accounts/after-add/db
-            owner=root group=root mode=0755
-
-    - name: Copy after-add (ssh-key) script to server
-      copy: src=scripts/after-add-ssh-key.sh
-            dest=/opt/gislab/custom/accounts/after-add/ssh-key
-            owner=root group=root mode=0755
-
-    - name: Copy before-delete script to server
-      copy: src=scripts/before-delete-db.sh
-            dest=/opt/gislab/custom/accounts/before-delete/db
-            owner=root group=root mode=0755
-
     - name: Copy QGIS customization to server
       copy: src=files/QGIS2.conf
             dest=/opt/gislab/system/accounts/skel/.config/QGIS
             owner=root group=root mode=0655
-
-    - name: Run customization script on server
-      shell: /tmp/customize.sh
-
-    - name: Remove customization script from server
-      file: path=/tmp/customize.sh
-            state=absent
