@@ -150,6 +150,13 @@ gismentors_data() {
         tar xzf rastry_georef.tar.gz
         rm rastry_georef.tar.gz
     fi
+
+    if [ ! -d vusc-diag ] ; then
+        wget https://github.com/GISMentors/dataset/raw/master/odvozena_data/vusc-diag.tar.gz
+        tar xzf vusc-diag.tar.gz
+        rm vusc-diag.tar.gz
+        sudo wget https://github.com/GISMentors/dataset/raw/master/odvozena_data/vusc-silnice-projekt.qgs
+    fi
 }
 
 gismentors_data
