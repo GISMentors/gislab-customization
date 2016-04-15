@@ -38,7 +38,7 @@ gdal() {
     make distclean
     ./configure --prefix=$1 --with-sqlite3 \
 		--with-grass=$TARGET/grass-$GRASS_VERSION \
-                --with-spatialite
+                --with-spatialite --with-python
     make -j2
     make install
 }
