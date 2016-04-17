@@ -44,7 +44,8 @@ gismentors_db() {
 	wget http://training.gismentors.eu/geodata/postgis/$db.dump
     fi
     if [ `psql -U postgres -l | grep -c $db` -eq 1 ] ; then
-	dropdb -U postgres $db
+	#dropdb -U postgres $db
+        return
     fi
     createdb -U postgres $db
     pg_restore /mnt/repository/$db.dump | psql -U postgres $db
@@ -75,10 +76,13 @@ gismentors_grass() {
 	wget http://training.gismentors.eu/geodata/grass/gismentors.zip
 	unzip gismentors.zip
 	wget http://training.gismentors.eu/geodata/grass/gismentors-landsat.zip
-	unzip gismentors-landsat.zip  
+	unzip gismentors-landsat.zip
+        wget http://training.gismentors.eu/geodata/grass/modis.zip
+        unzip modis.zip
+        rm *.zip
     fi
 
-    cd /opt/gislab/system/accounts/skel/.grassdata/
+    cd /opt/gislab/system/accounts/skel/grassdata/
     rm -rf gismentors
     mkdir gismentors
     cd gismentors
@@ -91,11 +95,20 @@ gismentors_grass() {
     ln -s /mnt/repository/grassdata/gismentors/ruian_praha .
     cp -r /mnt/repository/grassdata/gismentors/user1 gislab
     sed -i 's/user1/gislab/g' gislab/SEARCH_PATH
+    cd ..
     
+    rm -rf modis
+    mkdir modis
+    cd modis
+    ln -s /mnt/repository/grassdata/modis/PERMANENT .
+    cp -r /mnt/repository/grassdata/modis/user1 gislab
+    sed -i 's/user1/gislab/g' gislab/SEARCH_PATH
+
     cd /opt/gislab/system/accounts/skel/.grass7
     sh -c 'echo "export TMPDIR=/mnt/booster" > bashrc'
     sh -c 'echo "export GRASS_VECTOR_TEMPORARY=move" >> bashrc'
     sh -c 'echo "export GRASS_VECTOR_TMPDIR_MAPSET=0" >> bashrc'
+    sh -c 'echo "export GDAL_DATA=/usr/local/share/gdal" >> bashrc'
     sed -i 's/world/gismentors/g' rc
 }
 
@@ -106,7 +119,10 @@ gismentors_grass
 ###################
 gismentors_data() {
     datadir=/mnt/repository/gismentors
-    rm -rf $datadir && mkdir $datadir
+    if [ -d $datadir ] ; then
+        # rm -rf $datadir && mkdir $datadir
+        return
+    fi
     
     ${homedir}/${gitdir}/postgis/export_shp.sh
     mv /tmp/gismentors_shp $datadir/shp
