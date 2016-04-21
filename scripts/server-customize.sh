@@ -78,8 +78,6 @@ gismentors_grass() {
 	wget http://training.gismentors.eu/geodata/grass/gismentors-landsat.zip
 	unzip gismentors-landsat.zip
         wget http://training.gismentors.eu/geodata/grass/modis.zip
-        unzip modis.zip
-        rm *.zip
     fi
 
     cd /opt/gislab/system/accounts/skel/grassdata/
@@ -95,15 +93,7 @@ gismentors_grass() {
     ln -s /mnt/repository/grassdata/gismentors/ruian_praha .
     cp -r /mnt/repository/grassdata/gismentors/user1 gislab
     sed -i 's/user1/gislab/g' gislab/SEARCH_PATH
-    cd ..
     
-    rm -rf modis
-    mkdir modis
-    cd modis
-    ln -s /mnt/repository/grassdata/modis/PERMANENT .
-    cp -r /mnt/repository/grassdata/modis/user1 gislab
-    sed -i 's/user1/gislab/g' gislab/SEARCH_PATH
-
     cd /opt/gislab/system/accounts/skel/.grass7
     sh -c 'echo "export TMPDIR=/mnt/booster" > bashrc'
     sh -c 'echo "export GRASS_VECTOR_TEMPORARY=move" >> bashrc'
