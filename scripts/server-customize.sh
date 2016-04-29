@@ -110,14 +110,16 @@ gismentors_grass
 gismentors_data() {
     datadir=/mnt/repository/gismentors
     if [ -d $datadir ] ; then
-        # rm -rf $datadir && mkdir $datadir
         return
     fi
-    
-    ${homedir}/${gitdir}/postgis/export_shp.sh
-    mv /tmp/gismentors_shp $datadir/shp
 
+    mkdir $datadir
     cd $datadir
+    if [ ! -d shp ] ; then
+        ${homedir}/${gitdir}/postgis/export_shp.sh
+        mv /tmp/gismentors_shp shp
+    fi
+    
     if [ ! -f dmt.tif ] ; then
         wget http://training.gismentors.eu/geodata/eu-dem/dmt.zip
         unzip dmt.zip
