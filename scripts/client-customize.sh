@@ -53,7 +53,7 @@ apt-get install --yes --force-yes qgis python-qgis qgis-plugin-grass
 #######################################################
 apt-get install --yes --force-yes lightdm-gtk-greeter=1.1.5-0ubuntu1
 pip install numpy==1.8
-apt-get install libqca2 python-qt4-sql # QGIS 2.14
+# apt-get install libqca2 python-qt4-sql # QGIS 2.14
 
 apt-get --yes --force-yes autoremove
 
