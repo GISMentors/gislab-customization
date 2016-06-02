@@ -80,7 +80,9 @@ gismentors_grass() {
         wget http://training.gismentors.eu/geodata/grass/modis.zip
     fi
 
-    cd /opt/gislab/system/accounts/skel/grassdata/
+    cd /opt/gislab/system/accounts/skel
+    mv .grassdata grassdata
+    cd grassdata
     rm -rf gismentors
     mkdir gismentors
     cd gismentors
