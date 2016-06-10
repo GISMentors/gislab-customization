@@ -1,5 +1,5 @@
 #!/bin/sh
-#set -e
+set -e
 
 TARGET=/opt/gislab/system/clients/desktop/root/usr/local
 GRASS_VERSION=7.2.svn
@@ -8,7 +8,7 @@ GRASS_MAJOR=72
 grass() {
     cd /mnt/home/gislab/src/grass_$GRASS_MAJOR
     svn up
-    make distclean
+    make distclean || true
     ./configure \
 	--prefix=/usr/local \
 	--with-postgres --with-postgres-includes=/usr/include/postgresql \
@@ -35,7 +35,17 @@ grass() {
 gdal() {
     cd /mnt/home/gislab/src/gdal_21
     svn up
-    make distclean
+    make distclean || true
+    ./configure --prefix=$1 --with-sqlite3 \
+                --with-spatialite --with-python
+    make -j2
+    make install
+}
+
+gdal_grass() {
+    cd /mnt/home/gislab/src/gdal_21
+    svn up
+    make distclean || true
     ./configure --prefix=$1 --with-sqlite3 \
 		--with-grass=$TARGET/grass-$GRASS_VERSION \
                 --with-spatialite --with-python
@@ -47,7 +57,7 @@ geos() {
     cd /mnt/home/gislab/src/geos_35
     svn up
     ./autogen.sh
-    make distclean
+    make distclean || true
     ./configure --prefix=$1
     make -j2
     make install
@@ -62,11 +72,11 @@ qgis() {
           -D WITH_BINDINGS=ON \
           -D WITH_GRASS7=ON \
           -D QT_QMAKE_EXECUTABLE=/usr/share/qt4/bin/qmake \
-	  -D CMAKE_BUILD_TYPE=Release \
-	  -D CMAKE_INSTALL_PREFIX=$TARGET \
+          -D CMAKE_BUILD_TYPE=Release \
+          -D CMAKE_INSTALL_PREFIX=$TARGET \
           -D WITH_SERVER=ON \
-	  ..
-    make -j2
+          ..
+    make -j1
     make install
 
     if [ ! -f /usr/lib/cgi-bin/qgis_mapserv.fcgi.old ] ; then
@@ -79,7 +89,7 @@ proj() {
     cd /mnt/home/gislab/src/proj_49
     git pull
     ./autogen.sh
-    make distclean
+    make distclean || true
     ./configure --prefix=$1
     make -j2
     make install
@@ -91,7 +101,10 @@ gdal /usr/local
 gdal $TARGET
 geos /usr/local
 geos $TARGET
+ldconfig
 grass
+gdal_grass /usr/local
+gdal_grass $TARGET
 qgis
 
 ldconfig
