@@ -81,7 +81,10 @@ gismentors_grass() {
     fi
 
     cd /opt/gislab/system/accounts/skel
-    mv .grassdata grassdata
+    if [ -d .grassdata ] ; then
+        mv .grassdata grassdata
+        sed -i 's/\.grassdata/grassdata/g' /opt/gislab/system/accounts/skel/.grass7
+    fi
     cd grassdata
     rm -rf gismentors
     mkdir gismentors
