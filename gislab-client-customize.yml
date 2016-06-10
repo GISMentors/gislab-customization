@@ -12,7 +12,7 @@
             dest={{ GISLAB_INSTALL_CLIENTS_ROOT }}/desktop/root/usr/share/applications
             owner=root group=root mode=0644
 
-    - name: Copy gislab-grass.desktop to client chroot (GRASS 7.1)
+    - name: Copy gislab-grass.desktop to client chroot (GRASS 7.2)
       copy: src=files/gislab-grass.desktop
             dest={{ GISLAB_INSTALL_CLIENTS_ROOT }}/desktop/root/usr/share/applications
             owner=root group=root mode=0644
