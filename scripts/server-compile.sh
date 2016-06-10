@@ -2,8 +2,8 @@
 #set -e
 
 TARGET=/opt/gislab/system/clients/desktop/root/usr/local
-GRASS_VERSION=7.1.svn
-GRASS_MAJOR=71
+GRASS_VERSION=7.2.svn
+GRASS_MAJOR=72
 
 grass() {
     cd /mnt/home/gislab/src/grass_$GRASS_MAJOR
@@ -33,7 +33,7 @@ grass() {
 }
 
 gdal() {
-    cd /mnt/home/gislab/src/gdal_20
+    cd /mnt/home/gislab/src/gdal_21
     svn up
     make distclean
     ./configure --prefix=$1 --with-sqlite3 \
