@@ -4,14 +4,20 @@ set -e
 apt-get install --yes git emacs23-nox gdal-bin
 
 homedir=/mnt/home/gislab
-gitdir="dataset"
-if [ ! -d ${homedir}/${gitdir} ] ; then
-    cd $homedir
-    git clone https://github.com/GISMentors/${gitdir}.git
-else
-    cd ${homedir}/${gitdir}
-    git pull
-fi
+
+clone_git() {
+    gitdir=$1
+    if [ ! -d ${homedir}/${gitdir} ] ; then
+        cd $homedir
+        git clone https://github.com/GISMentors/${gitdir}.git
+    else
+        cd ${homedir}/${gitdir}
+        git pull
+    fi
+}
+
+clone_git dataset
+clone_git gislab-customization
 
 #######################
 ### Change SSH port ###
