@@ -95,6 +95,14 @@ proj() {
     make install
 }
 
+python_update() {
+    pip install --upgrade Fiona
+    pip install --upgrade rasterio
+    pip install --upgrade shapely
+    pip install --upgrade OWSLib
+
+}
+
 proj /usr/local
 proj $TARGET
 ldconfig
@@ -122,5 +130,7 @@ gislab-client-shell ldconfig
 qgis
 ldconfig
 gislab-client-shell ldconfig
+
+python_update
 
 exit 0
