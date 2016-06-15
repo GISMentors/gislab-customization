@@ -110,6 +110,7 @@ gismentors_grass() {
     sh -c 'echo "export GRASS_VECTOR_TEMPORARY=move" >> bashrc'
     sh -c 'echo "export GRASS_VECTOR_TMPDIR_MAPSET=0" >> bashrc'
     sh -c 'echo "export GDAL_DATA=/usr/local/share/gdal" >> bashrc'
+    sed -i 's/\.grassdata/grassdata/g' rc
     sed -i 's/world/gismentors/g' rc
 }
 
