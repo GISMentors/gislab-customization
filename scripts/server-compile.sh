@@ -97,16 +97,30 @@ proj() {
 
 proj /usr/local
 proj $TARGET
+ldconfig
+gislab-client-shell ldconfig
+
 gdal /usr/local
 gdal $TARGET
+ldconfig
+gislab-client-shell ldconfig
+
 geos /usr/local
 geos $TARGET
 ldconfig
-grass
-gdal_grass /usr/local
-gdal_grass $TARGET
-qgis
+gislab-client-shell ldconfig
 
+grass
 ldconfig
 gislab-client-shell ldconfig
+
+gdal_grass /usr/local
+gdal_grass $TARGET
+ldconfig
+gislab-client-shell ldconfig
+
+qgis
+ldconfig
+gislab-client-shell ldconfig
+
 exit 0
