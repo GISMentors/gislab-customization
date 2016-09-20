@@ -103,33 +103,32 @@ python_update() {
     pip install --upgrade OWSLib
 }
 
+ldconfig2() {
+    ldconfig
+    gislab-client-shell ldconfig
+}
+
 proj /usr/local
 proj $TARGET
-ldconfig
-gislab-client-shell ldconfig
+ldconfig2
 
 gdal /usr/local
 gdal $TARGET
-ldconfig
-gislab-client-shell ldconfig
+ldconfig2
 
 geos /usr/local
 geos $TARGET
-ldconfig
-gislab-client-shell ldconfig
+ldconfig2
 
 grass
-ldconfig
-gislab-client-shell ldconfig
+ldconfig2
 
 gdal_grass /usr/local
 gdal_grass $TARGET
-ldconfig
-gislab-client-shell ldconfig
+ldconfig2
 
 qgis
-ldconfig
-gislab-client-shell ldconfig
+ldconfig2
 
 python_update
 
