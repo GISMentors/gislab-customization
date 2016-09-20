@@ -15,7 +15,6 @@ if [ ! -d $HOMEDIR/src ]; then
     mkdir $HOMEDIR/src
 fi
 if [ ! -d $HOMEDIR/src/grass_72 ] ; then
-    
     svn co http://svn.osgeo.org/grass/grass/branches/releasebranch_7_2 $HOMEDIR/src/grass_72
 fi
 if [ ! -d $HOMEDIR/src/geos_35 ] ; then
