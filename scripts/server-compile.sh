@@ -66,6 +66,7 @@ geos() {
 qgis() {
     cd /mnt/home/gislab/src/qgis_214
     rm -rf build
+    git pull
     mkdir build
     cd build
     cmake -D GRASS_PREFIX7=$TARGET/grass-$GRASS_VERSION \
@@ -100,7 +101,6 @@ python_update() {
     pip install --upgrade rasterio
     pip install --upgrade shapely
     pip install --upgrade OWSLib
-
 }
 
 proj /usr/local
