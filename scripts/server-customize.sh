@@ -175,7 +175,14 @@ gismentors_data() {
         wget https://github.com/GISMentors/dataset/raw/master/odvozena_data/vusc-diag.tar.gz
         tar xzf vusc-diag.tar.gz
         rm vusc-diag.tar.gz
-        sudo wget https://github.com/GISMentors/dataset/raw/master/odvozena_data/vusc-silnice-projekt.qgs
+        wget https://github.com/GISMentors/dataset/raw/master/odvozena_data/vusc-silnice-projekt.qgs
+    fi
+
+    if [ ! -d geopython ] ; then
+        wget http://training.gismentors.eu/geodata/geopython/data.tgz
+        tar xvzf data.tgz
+        mv data geopython
+        rm data.tgz
     fi
 }
 
