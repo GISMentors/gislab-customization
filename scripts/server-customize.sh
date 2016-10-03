@@ -66,6 +66,7 @@ gismentors_db() {
     schema_priv csu_sldb gislabusers
     schema_priv slhp gislabusers
     schema_priv ochrana_uzemi gislabusers
+    schema_priv jizera gislabusers
     
     revoke_priv gislabusers
 }
