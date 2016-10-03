@@ -50,12 +50,12 @@ gismentors_db() {
 	wget http://training.gismentors.eu/geodata/postgis/$db.dump
     fi
     if [ `psql -U postgres -l | grep -c $db` -eq 1 ] ; then
-	#dropdb -U postgres $db
-        return
+	dropdb -U postgres $db
+        #return
     fi
     createdb -U postgres $db
     pg_restore /mnt/repository/$db.dump | psql -U postgres $db
-    ${homedir}/${gitdir}/postgis/epsg-5514.sh
+    ${homedir}/dataset/postgis/epsg-5514.sh
     
     schema_priv public gislabusers
     schema_priv dibavod gislabusers
@@ -89,7 +89,7 @@ gismentors_grass() {
     cd /opt/gislab/system/accounts/skel
     if [ -d .grassdata ] ; then
         mv .grassdata grassdata
-        sed -i 's/\.grassdata/grassdata/g' /opt/gislab/system/accounts/skel/.grass7
+        sed -i 's/\.grassdata/grassdata/g' /opt/gislab/system/accounts/skel/.grass7/rc
     fi
     cd grassdata
     rm -rf gismentors
@@ -128,7 +128,7 @@ gismentors_data() {
     mkdir $datadir
     cd $datadir
     if [ ! -d shp ] ; then
-        ${homedir}/${gitdir}/postgis/export_shp.sh
+        ${homedir}/dataset/postgis/export_shp.sh
         mv /tmp/gismentors_shp shp
     fi
     
