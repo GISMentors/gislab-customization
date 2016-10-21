@@ -1,4 +1,5 @@
 #!/bin/sh
+# Drop user schema from gismentors db
 
 drop_schema() {
     if [ ! -z `sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -w $1` ]; then

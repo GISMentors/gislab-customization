@@ -1,0 +1,30 @@
+# Create gismentors database
+
+- name: Download dump
+  get_url:
+    url: "http://training.gismentors.eu/geodata/postgis/{{ dbname }}.dump"
+    dest: "/mnt/repository/{{ dbname }}.dump"
+    mode: 0440
+    force: no
+
+- name: Clone dataset repository
+  - git:
+      repo: https://github.com/GISMentors/dataset.git
+      dest: "{{ home_dir }}/dataset"
+
+- name: Drop gismentors database if exists
+  - postgresql_db:
+      name: "{{ dbname }}"
+      login_user: postgres
+      state: absent
+
+- name: Create database gismentors
+  - postgresql_db:
+      name: "{{ dbname }}"
+      login_user: postgres
+
+- name: Import data into gismentors database
+  shell: pg_restore "/mnt/repository/{{ dbname }}.dump" | psql -U postgres "{{ dbname }}"
+
+- name: Add EPSG 5514 code
+  shell: "{{ home_dir }}/dataset/postgis/epsg-5514.sh"

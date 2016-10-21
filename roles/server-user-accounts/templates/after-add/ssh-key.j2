@@ -1,0 +1,10 @@
+#!/bin/sh
+# Register ssh key of gislab users for newly created user (then gislab user can access client machine)
+
+if [ -f /mnt/home/gislab/.ssh/id_rsa.pub ] ; then
+    mkdir /mnt/home/${GISLAB_USER}/.ssh
+    cp /mnt/home/gislab/.ssh/id_rsa.pub /mnt/home/${GISLAB_USER}/.ssh/authorized_keys
+    chown ${GISLAB_USER}:gislabusers /mnt/home/${GISLAB_USER}/.ssh/ -R
+fi
+
+exit 0

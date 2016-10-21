@@ -1,4 +1,5 @@
 #!/bin/sh
+# Create new schema in gismentors db
 
 create_schema() {
     if [ ! -z `sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -w $1` ]; then

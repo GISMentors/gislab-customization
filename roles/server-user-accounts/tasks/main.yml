@@ -1,0 +1,33 @@
+# User accounts customization
+
+- name: Copy after-add (db) script to server
+  template:
+    src: after-add/db.j2
+    dest: /opt/gislab/custom/accounts/after-add/db
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy after-add (ssh-key) script to server
+  template:
+    src: after-add/ssh-key.j2
+    dest: /opt/gislab/custom/accounts/after-add/ssh-key
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy before-delete script to server
+  template:
+    src: before-delete/db.j2
+    dest: /opt/gislab/custom/accounts/before-delete/db
+    owner: root
+    group: root
+    mode: 0755
+
+- name: QGIS desktop customization
+  template:
+    src: config/QGIS/QGIS2.conf.j2
+    dest: /opt/gislab/custom/accounts/files/.config/QGIS/QGIS2.conf
+    owner: root
+    group: root
+    mode: 0655
