@@ -2,5 +2,10 @@
 
 - name: Install custom packages
   apt:
-    name: git emacs23-nox gdal-bin
+    name: "{{ item }}"
     update_cache: yes
+    install_recommends: no
+  with_items:
+    - git
+    - emacs23-nox
+    - gdal-bin
