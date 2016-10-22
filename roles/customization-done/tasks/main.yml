@@ -1,0 +1,4 @@
+# Customization done
+
+- name: Customization of GIS.lab is done
+  shell: date -R

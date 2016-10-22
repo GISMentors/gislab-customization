@@ -1,0 +1,12 @@
+# Perform GISMentors customization for GIS.lab
+
+- hosts: all
+  sudo: yes
+  roles:
+    - { role: server-packages, tags: ['server-packages'] }
+    - { role: server-user-accounts, tags: ['server-user-accounts'] }
+    - { role: server-data-db, tags: ['server-data-db'] }
+    - { role: server-data-grass, tags: ['server-data-grass'] }
+    - { role: server-data-other, tags: ['server-data-other'] }
+    - { role: client-packages, tags: ['client-packages'] }
+    - { role: customization-done, tags: ['customization-done'] }
