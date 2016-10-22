@@ -1,0 +1,63 @@
+# Create GRASS location
+
+- name: Download data
+  unarchive:
+    src: http://training.gismentors.eu/geodata/grass/gismentors.zip
+    dest: "{{ grassdata_shared }}"
+    remote_src: yes
+    creates: no
+    
+- name: Download data (mapset: Landsat)
+  unarchive:
+    src: http://training.gismentors.eu/geodata/grass/gismentors-landsat.zip
+    dest: "{{ grassdata_shared }}"
+    remote_src: yes
+    creates: no
+
+- name: Download data (mapset: Modis)
+  unarchive:
+    url: http://training.gismentors.eu/geodata/grass/modis.zip
+    dest: "{{ grassdata_shared }}"
+    remote_src: yes
+    creates: no
+
+- name: Create GRASS location template
+  file:
+    path: "{{ grassdata_shared }}/gismentors"
+    state: directory
+
+- name: Create GRASS mapsets 
+  file:
+    src: "{{ grassdata_shared }}/{{ item }}"
+    dest: "{{ grassdata_local }}/{{ item }}"
+    state: link
+  with_items:
+    - PERMANENT
+    - dibavod
+    - landsat
+    - ochrana_uzemi
+    - osm
+    - ruian
+    - ruian_praha
+
+- name: Create gislab mapset
+  copy:
+    src: "{{ grassdata_shared }}/user1"
+    dest: "{{ grassdata_local }}/gislab"
+
+- name: Update search path (gislab mapset)
+  replace:
+    dest: "{{ grassdata_local }}/gislab/SEARCH_PATH"
+    regexp: "user1"
+    replace: "gislab"
+
+- name: Configure GRASS
+  template:
+    src: grass7/bashrc.j2
+    dest: /opt/gislab/system/accounts/skel/.grass7/bashrc
+
+- name: Set default GRASS location
+  replace:
+    dest: /opt/gislab/system/accounts/skel/.grass7/rc
+    regexp: "world"
+    replace: "gismentors"

@@ -12,6 +12,11 @@
       repo: https://github.com/GISMentors/dataset.git
       dest: "{{ home_dir }}/dataset"
 
+- name: Clone gislab customization repository
+  - git:
+      repo: https://github.com/GISMentors/gislab-customization.git
+      dest: "{{ home_dir }}/gislab-customization"
+
 - name: Drop gismentors database if exists
   - postgresql_db:
       name: "{{ dbname }}"
@@ -28,3 +33,16 @@
 
 - name: Add EPSG 5514 code
   shell: "{{ home_dir }}/dataset/postgis/epsg-5514.sh"
+
+- name: Grant privileges on gismentors database
+  shell: psql -U postgres gismentors -f "{{ home_dir }}/gislab-customization/files/privileges.sql"
+
+- name: Check if data directory exists 
+  stat:
+    path: "{{ data_dir }}"
+  register: gisdata_stat
+
+- name: Export data as shapefiles
+  shell: "{{ home_dir }}/dataset/postgis/export_shp.sh"
+  args: "{{ data_dir }}/shp"
+  when: gisdata_stat

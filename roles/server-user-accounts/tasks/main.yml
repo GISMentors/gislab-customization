@@ -31,3 +31,19 @@
     owner: root
     group: root
     mode: 0655
+
+- name: Check if grassdata exists
+  stat:
+    path: /opt/gislab/system/accounts/skel/.grassdata
+  register: grassdata_stat
+
+- name: Rename grassdata directory
+  command: mv /opt/gislab/system/accounts/skel/.grassdata /opt/gislab/system/accounts/skel/grassdata
+  when: grassdata_stat.stat.exists
+
+- name: Update grassdata rc file
+  replace:
+    dest: /opt/gislab/system/accounts/skel/.grass7/rc
+    regexp: '\.grassdata'
+    replace: 'grassdata'
+  when: grassdata_stat.stat.exists

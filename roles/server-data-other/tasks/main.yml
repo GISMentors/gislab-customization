@@ -1,0 +1,35 @@
+# Download other data
+
+- name: Download DMT file
+  unarchive:
+    src: http://training.gismentors.eu/geodata/eu-dem/dmt.zip
+    dest: "{{ data_dir }}"
+
+- name: Create resampled DMT
+  shell: gdalwarp -t_srs EPSG:5514 -r cubic -tr 100 100 dmt.tif dmt100.tif
+  args:
+    chdir: "{{ data_dir }}"
+
+- name: Download txt data
+  get_url:
+    url: https://github.com/GISMentors/qgis-zacatecnik/files/39270/export.txt
+    dest: "{{ data_dir }}"
+  with_items:
+    - 39270/export.txt
+    - 39271/xy_data.txt
+
+- name: Download geopython data
+  get_url:
+    url: http://training.gismentors.eu/geodata/geopython/data.tgz
+    dest: "{{ data_dir }}"
+
+- name: Download other data
+  unarchive:
+    src: "https://github.com/GISMentors/dataset/raw/master/odvozena_data/{{ item }}"
+    dest: "{{ data_dir }}"
+  with_items:
+    - WP_20160403.tar.bz2
+    - vusc_krim.tar.gz
+    - dopr_znaceni.tar.gz
+    - rastry_georef.tar.gz
+    - vusc-diag.tar.gz
