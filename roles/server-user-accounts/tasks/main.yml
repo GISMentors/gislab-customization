@@ -26,7 +26,7 @@
 
 - name: QGIS desktop customization
   template:
-    src: config/QGIS/QGIS2.conf.j2
+    src: config/QGIS/QGIS2.j2
     dest: /opt/gislab/custom/accounts/files/.config/QGIS/QGIS2.conf
     owner: root
     group: root
