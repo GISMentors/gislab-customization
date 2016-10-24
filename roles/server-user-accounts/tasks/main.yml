@@ -24,6 +24,11 @@
     group: root
     mode: 0755
 
+- name: Create QGIS config directory
+  file:
+    path: /opt/gislab/custom/accounts/files/.config/QGIS
+    state: directory
+
 - name: QGIS desktop customization
   template:
     src: config/QGIS/QGIS2.j2
