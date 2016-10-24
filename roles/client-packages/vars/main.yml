@@ -1,0 +1,20 @@
+packages:
+  - gedit
+  - geany
+  - sqlitebrowser
+  - python-pip
+  - g++
+  - python-dev
+  - libgdal-dev
+  - python-numpy
+  - python-rpy2
+  - ipython-notebook
+  - python-tk
+  - postgis
+
+packages_ppa:
+  - qgis
+  - python-qgis
+  - qgis-plugin-grass
+
+apt_get_opts: "--assume-yes --force-yes"

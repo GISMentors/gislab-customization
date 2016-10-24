@@ -13,6 +13,8 @@
     data_url: http://training.gismentors.eu/geodata/grass
     config_dir: /opt/gislab/system/accounts/skel/.grass7
     grass_location: gismentors
+    # client
+    root_dir: /opt/gislab/system/clients/desktop/root  
 
   roles:
     - { role: server-packages, tags: ['server-packages'] }

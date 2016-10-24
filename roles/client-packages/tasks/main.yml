@@ -1,32 +1,31 @@
 # Client packages installation
 
 - name: Install custom packages
-  apt:
-    name: "{{ item }}"
-    update_cache: yes
-    install_recommends: no
-  with_items:
-    - gedit
-    - geany
-    - sqlitebrowser
-    - python-pip
-    - g++
-    - python-dev
-    - libgdal-dev
-    - python-numpy
-    - python-rpy2
-    - ipython-notebook
-    - python-tk
-    - postgis
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    apt-get {{ apt_get_opts }} install {{ packages|join(' ') }}
+  args:
+    executable: /bin/bash
 
 - name: Install Fiona
-  pip:
-    name: Fiona
-    version: 1.6.4
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    pip install Fiona==1.6.4
+  args:
+    executable: /bin/bash
 
-- name: Install other pip packages
-  pip:
-    name: "{{ item }}"
+- name: Install Rasterio, Shapely, OWSLib
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    pip install {{ item }}
+  args:
+    executable: /bin/bash
   with_items:
     - rasterio
     - shapely
@@ -34,28 +33,42 @@
 
 - name: Create /etc/apt/sources.list.d if not exists
   file:
-    path: /etc/apt/sources.list.d
+    path: "{{ root_dir }}/etc/apt/sources.list.d"
     state: directory
 
 - name: Add gismentors PPA repository
-  apt_repository:
-    repo: "ppa:landa-martin/gislab-testing"
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    add-apt-repository --yes ppa:landa-martin/gislab-testing
+  args:
+    executable: /bin/bash
 
 - name: Install packages from gismentors PPA repository
-  apt:
-    name: "{{ item }}"
-    update_cache: yes
-    install_recommends: no
-  with_items:
-    - qgis
-    - python-qgis
-    - qgis-plugin-grass
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    apt-get update &&
+    apt-get {{ apt_get_opts }} install {{ packages_ppa|join(' ') }}
+  args:
+    executable: /bin/bash
 
 - name: Fix numpy version (for GRASS)
-  pip:
-    name: numpy
-    version: 1.8
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    pip install numpy==1.8
+  args:
+    executable: /bin/bash
 
 - name: Remove unused packages
-  apt:
-    autoremove: true
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    apt-get autoremove
+  args:
+    executable: /bin/bash
