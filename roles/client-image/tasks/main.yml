@@ -1,0 +1,4 @@
+# Rebuild client image
+
+- name: Rebuild client image
+  shell: gislab-client-image

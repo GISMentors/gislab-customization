@@ -10,4 +10,5 @@
     - { role: server-data-other, tags: ['server-data-other'] }
     - { role: client-packages, tags: ['client-packages'] }
     - { role: client-nvidia, tags: ['client-nvidia'] }
+    - { role: client-image, tags: ['client-image'] }
     - { role: customization-done, tags: ['customization-done'] }
