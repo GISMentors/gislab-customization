@@ -32,6 +32,11 @@
     - shapely
     - OWSLib
 
+- name: Create /etc/apt/sources.list.d if not exists
+  file:
+    path: /etc/apt/sources.list.d
+    state: directory
+
 - name: Add gismentors PPA repository
   apt_repository:
     repo: "ppa:landa-martin/gislab-testing"

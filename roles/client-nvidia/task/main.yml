@@ -1,0 +1,22 @@
+# Install Nvidia drivers on client
+
+- name: Check if we are running GIS.lab Unit
+  shell: grep GISLAB_UNIQUE_ID /etc/gislab_version | grep gislab-unit | wc -l
+  register: gislab_unit
+
+- name: Add ubuntu-x-swat PPA repository
+  apt_repository:
+    repo: "ppa:ubuntu-x-swat/x-updates"
+  when:
+    gislab_unit.rc == 1
+
+- name: Install nvidia packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    install_recommends: no
+  with_items:
+    - nvidia-settings-319
+    - nvidia-settings
+  when:
+    gislab_unit.rc == 1
