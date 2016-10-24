@@ -1,35 +1,58 @@
 # Create GRASS location
 
-- name: Download data
-  unarchive:
-    src: http://training.gismentors.eu/geodata/grass/gismentors.zip
-    dest: "{{ grassdata_shared }}"
-    remote_src: yes
-    creates: no
-    
-- name: Download data (mapset Landsat)
-  unarchive:
-    src: http://training.gismentors.eu/geodata/grass/gismentors-landsat.zip
-    dest: "{{ grassdata_shared }}"
-    remote_src: yes
-    creates: no
-
-- name: Download data (mapset Modis)
-  unarchive:
-    url: http://training.gismentors.eu/geodata/grass/modis.zip
-    dest: "{{ grassdata_shared }}"
-    remote_src: yes
-    creates: no
-
-- name: Create GRASS location template
+- name: Create GRASS data directory
   file:
-    path: "{{ grassdata_shared }}/gismentors"
+    path: "{{ repository_grassdata }}"
     state: directory
+  register: grasssdata
+    
+- name: Download GRASS locations
+  get_url:
+    url: "{{ data_url }}/{{ item}}.zip"
+    dest: "{{ repository_grassdata }}/{{ item }}.zip"
+  with_items:
+    - gismentors
+    - gismentors-landsat
+    - modis
 
-- name: Create GRASS mapsets 
+- name: Check if GRASS locations exist
+  stat:
+    path: "{{ repository_grassdata }}/gismentors"
+  register: grassdata
+
+# note: unarchive supports remote_src since version 2.2+
+- name: Unpack GRASS locations
+  unarchive:
+    src: "{{ repository_grassdata }}/{{ item }}.zip"
+    dest: "{{ repository_grassdata }}"
+    copy: no
+    creates: no
+  with_items:
+    - gismentors
+    - gismentors-landsat
+    - modis
+  when: grassdata.stat.exists == False
+
+- name: Change ownership of GRASS data directory
   file:
-    src: "{{ grassdata_shared }}/{{ item }}"
-    dest: "{{ grassdata_local }}/{{ item }}"
+    path: "{{ repository_grassdata }}"
+    owner: gislab
+    group: gislabadmins
+    state: directory
+    recurse: yes
+  when: grassdata.changed
+
+- name: Create user GRASS location
+  file: 
+    path: "{{ user_grassdata}}/{{grass_location }}"
+    state: directory
+  register:
+    gismentors_loc
+
+- name: Link GRASS mapsets 
+  file:
+    src: "{{ repository_grassdata }}/{{ grass_location}}/{{ item }}"
+    dest: "{{ user_grassdata }}/{{ grass_location }}/{{ item }}"
     state: link
   with_items:
     - PERMANENT
@@ -39,25 +62,26 @@
     - osm
     - ruian
     - ruian_praha
+  when: gismentors_loc.changed
 
 - name: Create gislab mapset
-  copy:
-    src: "{{ grassdata_shared }}/user1"
-    dest: "{{ grassdata_local }}/gislab"
+  command: cp -r "{{ repository_grassdata }}/{{ grass_location }}/user1" "{{ user_grassdata }}/{{ grass_location }}/gislab"
+  when: gismentors_loc.changed
 
 - name: Update search path (gislab mapset)
   replace:
-    dest: "{{ grassdata_local }}/gislab/SEARCH_PATH"
+    dest: "{{ user_grassdata }}/{{ grass_location }}/gislab/SEARCH_PATH"
     regexp: "user1"
     replace: "gislab"
+  when: gismentors_loc.changed
 
 - name: Configure GRASS
   template:
     src: grass7/bashrc.j2
-    dest: /opt/gislab/system/accounts/skel/.grass7/bashrc
+    dest: "{{ config_dir }}/bashrc"
 
 - name: Set default GRASS location
   replace:
-    dest: /opt/gislab/system/accounts/skel/.grass7/rc
+    dest: "{{ config_dir }}/rc"
     regexp: "world"
     replace: "gismentors"

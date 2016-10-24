@@ -1,35 +1,75 @@
 # Download other data
 
+- name: Create data directory
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ data_dir }}"
+    - "{{ data_dir }}/geopython"
+    - "{{ data_dir }}/txt"
+  register: datadir
+
 - name: Download DMT file
+  get_url:
+    url: http://training.gismentors.eu/geodata/eu-dem/dmt.zip
+    dest: "{{ data_dir }}/dmt.zip"
+  register:
+    dmt
+
+- name: Unpack DMT file
   unarchive:
-    src: http://training.gismentors.eu/geodata/eu-dem/dmt.zip
+    src: "{{ data_dir }}/dmt.zip"
     dest: "{{ data_dir }}"
+    copy: no
+  when: dmt.changed
 
 - name: Create resampled DMT
   shell: gdalwarp -t_srs EPSG:5514 -r cubic -tr 100 100 dmt.tif dmt100.tif
   args:
     chdir: "{{ data_dir }}"
+  when: dmt.changed
 
 - name: Download txt data
   get_url:
-    url: https://github.com/GISMentors/qgis-zacatecnik/files/39270/export.txt
-    dest: "{{ data_dir }}"
+    url: "https://github.com/GISMentors/qgis-zacatecnik/files/{{ item }}"
+    dest: "{{ data_dir }}/txt"
   with_items:
     - 39270/export.txt
     - 39271/xy_data.txt
+  when:
+    datadir.changed
 
 - name: Download geopython data
   get_url:
     url: http://training.gismentors.eu/geodata/geopython/data.tgz
-    dest: "{{ data_dir }}"
+    dest: "{{ data_dir }}/geopython.tgz"
+  register: geopython_data
 
-- name: Download other data
+- name: Unpack geopython data
   unarchive:
-    src: "https://github.com/GISMentors/dataset/raw/master/odvozena_data/{{ item }}"
+    src: "{{ data_dir }}/geopython.tgz"
+    dest: "{{ data_dir }}/geopython"
+    copy: no
+  when: geopython_data.changed
+
+- name: Unpack other data
+  unarchive:
+    src: "{{ home_dir }}/dataset/odvozena_data/{{ item }}"
     dest: "{{ data_dir }}"
+    copy: no
   with_items:
     - WP_20160403.tar.bz2
     - vusc_krim.tar.gz
     - dopr_znaceni.tar.gz
     - rastry_georef.tar.gz
     - vusc-diag.tar.gz
+  when:
+    datadir.changed
+
+- name: Set up ownership for data directory
+  file:
+    path: "{{ data_dir }}"
+    owner: gislab
+    group: gislabadmins
+    recurse: yes

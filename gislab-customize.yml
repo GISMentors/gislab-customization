@@ -2,9 +2,22 @@
 
 - hosts: all
   sudo: yes
+  vars:
+    # service-data-db
+    dbname: gismentors
+    home_dir: /mnt/home/gislab
+    data_dir: /mnt/repository/gismentors
+    # service-data-grass
+    repository_grassdata: /mnt/repository/grassdata
+    user_grassdata: /opt/gislab/system/accounts/skel/grassdata
+    data_url: http://training.gismentors.eu/geodata/grass
+    config_dir: /opt/gislab/system/accounts/skel/.grass7
+    grass_location: gismentors
+
   roles:
     - { role: server-packages, tags: ['server-packages'] }
     - { role: server-user-accounts, tags: ['server-user-accounts'] }
+    - { role: server-data-cleanup, tags: ['server-data-cleanup'] }
     - { role: server-data-db, tags: ['server-data-db'] }
     - { role: server-data-grass, tags: ['server-data-grass'] }
     - { role: server-data-other, tags: ['server-data-other'] }

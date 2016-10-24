@@ -1,11 +1,15 @@
 # Create gismentors database
 
-- name: Download dump
+- name: Download gismentors dump
   get_url:
     url: "http://training.gismentors.eu/geodata/postgis/{{ dbname }}.dump"
     dest: "/mnt/repository/{{ dbname }}.dump"
-    mode: 0440
-    force: no
+
+- name: Set up ownership for dump file
+  file:
+    path: "/mnt/repository/{{ dbname }}.dump"
+    owner: gislab
+    group: gislabadmins
 
 - name: Clone dataset repository
   git:
@@ -16,33 +20,66 @@
   git:
     repo: https://github.com/GISMentors/gislab-customization.git
     dest: "{{ home_dir }}/gislab-customization"
+    version: "ansible-roles"
 
-- name: Drop gismentors database if exists
-  postgresql_db:
-    name: "{{ dbname }}"
-    login_user: postgres
-    state: absent
+- name: Set up ownership for git repositories
+  file:
+    path: "{{ home_dir }}/{{ item }}"
+    owner: gislab
+    group: gislabusers
+    recurse: yes
+  with_items:
+    - dataset
+    - gislab-customization
 
 - name: Create database gismentors
   postgresql_db:
     name: "{{ dbname }}"
     login_user: postgres
+  register: db_created
 
 - name: Import data into gismentors database
   shell: pg_restore "/mnt/repository/{{ dbname }}.dump" | psql -U postgres "{{ dbname }}"
+  when:
+    db_created.changed
 
-- name: Add EPSG 5514 code
-  shell: "{{ home_dir }}/dataset/postgis/epsg-5514.sh"
+- name: Download EPSG 5514 code definiton
+  get_url:
+    url: http://epsg.io/5514-1623.sql
+    dest: /tmp/5514-1623.sql 
+  when:
+    db_created.changed
+    
+- name: Drop existing EPSG 5514 definition
+  shell: psql -U postgres "{{ dbname }}" -c "delete from spatial_ref_sys where srid = 5514"
+  when:
+    db_created.changed
+
+- name: Insert new EPSG 5514 defintion
+  shell: psql -U postgres "{{ dbname }}" -f /tmp/5514-1623.sql
+  when:
+    db_created.changed
 
 - name: Grant privileges on gismentors database
   shell: psql -U postgres gismentors -f "{{ home_dir }}/gislab-customization/files/privileges.sql"
+  when:
+    db_created.changed
 
-- name: Check if data directory exists 
-  stat:
+- name: Create data directory
+  file:
     path: "{{ data_dir }}"
-  register: gisdata_stat
+    state: directory
+  register: gisdata
 
 - name: Export data as shapefiles
-  shell: "{{ home_dir }}/dataset/postgis/export_shp.sh"
-  args: "{{ data_dir }}/shp"
-  when: gisdata_stat
+  shell: "{{ home_dir }}/dataset/postgis/export_shp.sh {{ data_dir }}/shp"
+  when: 
+    gisdata.changed
+
+- name: Set up ownership for data directory
+  file:
+    path: "{{ data_dir }}"
+    owner: gislab
+    group: gislabadmins
+  when:
+    gisdata.changed

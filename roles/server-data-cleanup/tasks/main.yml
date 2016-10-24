@@ -1,0 +1,25 @@
+# Clean-up data
+
+- name: Delete dump file
+  file: 
+    path: "/mnt/repository/{{ dbname }}.dump"
+    state: absent
+ 
+- name: Drop gismentors database
+  postgresql_db:
+    name: "{{ dbname }}"
+    login_user: postgres
+    state: absent
+
+- name: Delete data directory
+  file: 
+    path: "{{ data_dir }}"
+    state: absent
+
+- name: Remove GRASS data directories
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ repository_grassdata }}"
+    - "{{ user_grassdata }}"
