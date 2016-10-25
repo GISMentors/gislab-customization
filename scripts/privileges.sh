@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "$1" ] ; then
     DB="$1"
@@ -17,10 +17,12 @@ schemas=`sudo psql -U $USER $DB -c"\dn" -A -t | cut -d'|' -f1`
 
 # grant privileges
 for schema in $schemas; do
+    echo "Schema $schema..."
     grant_priv $schema
 done
 
 # revoke priviliges on public
+echo "Revoke..."
 echo "REVOKE CREATE ON SCHEMA public FROM gislabusers;
 REVOKE ALL ON SCHEMA public FROM gislabusers;" |
     sudo psql -U $USER $DB
