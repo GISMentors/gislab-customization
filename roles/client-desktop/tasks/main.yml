@@ -12,5 +12,5 @@
 - name: Update XFCE configuration
   template:
     src: xfce4/default.j2
-    dest: "{{ root_dir }}/desktop/root/etc/xdg/xdg-xubuntu/xfce4/panel/{{ item }}.xml"
+    dest: "{{ root_dir }}/etc/xdg/xdg-xubuntu/xfce4/panel/default.xml"
     mode: 0644
