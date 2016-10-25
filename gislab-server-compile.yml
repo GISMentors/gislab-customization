@@ -5,7 +5,7 @@
     SERVER_SCRIPT: scripts/server-compile.sh
 
   tasks:
-    # Compile GRASS 7.1 + GDAL 2.0 + QGIS 2.14 on server
+    # Compile GRASS 7.2 + GDAL 2.0 + QGIS 2.14 on server
     - name: Copy build script to server
       copy: src={{ SERVER_SCRIPT }}
             dest=/tmp/compile.sh
