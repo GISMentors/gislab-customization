@@ -16,10 +16,15 @@
     # client
     root_dir: /opt/gislab/system/clients/desktop/root  
 
+  vars_prompt:
+    - name: run_cleanup
+      prompt: "Cleanup data?"
+      default: "N"
+
   roles:
     - { role: server-packages, tags: ['server-packages'] }
     - { role: server-user-accounts, tags: ['server-user-accounts'] }
-    - { role: server-data-cleanup, tags: ['server-data-cleanup'] }
+    - { role: server-data-cleanup, tags: ['server-data-cleanup'], when: run_cleanup == "Y" or run_common == "y" }
     - { role: server-data-db, tags: ['server-data-db'] }
     - { role: server-data-grass, tags: ['server-data-grass'] }
     - { role: server-data-other, tags: ['server-data-other'] }
