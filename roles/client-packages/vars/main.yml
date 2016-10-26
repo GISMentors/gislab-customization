@@ -15,6 +15,6 @@ packages:
 packages_ppa:
   - qgis
   - python-qgis
-  - qgis-plugin-grass
+#  - qgis-plugin-grass
 
 apt_get_opts: "--assume-yes --force-yes"
