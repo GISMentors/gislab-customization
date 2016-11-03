@@ -4,9 +4,9 @@
   shell: grep GISLAB_UNIQUE_ID /etc/gislab_version | grep gislab-unit | wc -l
   register: gislab_unit
 
-- name: Add ubuntu-x-swat PPA repository
+- name: Add Ubuntu restricted repository
   apt_repository:
-    repo: "ppa:ubuntu-x-swat/x-updates"
+    repo: "deb http://archive.ubuntu.com/ubuntu/ precise restricted"
   when:
     gislab_unit.rc == 1
 
@@ -16,6 +16,7 @@
     update_cache: yes
     install_recommends: no
   with_items:
+    - nvidia-319
     - nvidia-settings-319
     - nvidia-settings
   when:
