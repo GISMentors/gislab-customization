@@ -20,7 +20,6 @@
   git:
     repo: https://github.com/GISMentors/gislab-customization.git
     dest: "{{ home_dir }}/gislab-customization"
-    version: "ansible-roles"
 
 - name: Set up ownership for git repositories
   file:
