@@ -53,7 +53,9 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    apt-get update &&
+    apt-get update
+    &&
+    chroot {{ root_dir }}
     apt-get {{ apt_get_opts }} install {{ packages_ppa|join(' ') }}
   args:
     executable: /bin/bash
@@ -72,6 +74,6 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    apt-get autoremove
+    apt-get {{ apt_get_opts }} autoremove
   args:
     executable: /bin/bash
