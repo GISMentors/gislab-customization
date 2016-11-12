@@ -5,6 +5,9 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
+    apt-get update
+    &&
+    chroot {{ root_dir }}
     apt-get {{ apt_get_opts }} install {{ packages|join(' ') }}
   args:
     executable: /bin/bash
