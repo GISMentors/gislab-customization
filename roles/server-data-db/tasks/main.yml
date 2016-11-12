@@ -5,12 +5,6 @@
     url: "http://training.gismentors.eu/geodata/postgis/{{ dbname }}.dump"
     dest: "/mnt/repository/{{ dbname }}.dump"
 
-- name: Set up ownership for dump file
-  file:
-    path: "/mnt/repository/{{ dbname }}.dump"
-    owner: gislab
-    group: gislabadmins
-
 - name: Clone dataset repository
   git:
     repo: https://github.com/GISMentors/dataset.git
@@ -20,16 +14,6 @@
   git:
     repo: https://github.com/GISMentors/gislab-customization.git
     dest: "{{ home_dir }}/gislab-customization"
-
-- name: Set up ownership for git repositories
-  file:
-    path: "{{ home_dir }}/{{ item }}"
-    owner: gislab
-    group: gislabusers
-    recurse: yes
-  with_items:
-    - dataset
-    - gislab-customization
 
 - name: Create database gismentors
   postgresql_db:
@@ -75,10 +59,21 @@
   when: 
     gisdata.changed
 
-- name: Set up ownership for data directory
+- name: Change data files ownership
   file:
-    path: "{{ data_dir }}"
+    path: "{{ item }}"
     owner: gislab
     group: gislabadmins
-  when:
-    gisdata.changed
+  with_items:
+    - "/mnt/repository/{{ dbname }}.dump"
+
+- name: Change data directories ownership
+  file:
+    path: "{{ item }}"
+    owner: gislab
+    group: gislabadmins
+    recurse: yes
+  with_items:
+    - "{{ data_dir }}"
+    - "{{ home_dir }}/dataset"
+    - "{{ home_dir }}/gislab-customization"
