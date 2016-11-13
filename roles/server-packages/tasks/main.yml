@@ -11,23 +11,23 @@
     - gdal-bin
   become: yes
   
-# GIS.lab Web (see gislab-web/provision/roles/gislab-web/tasks/main.yml)
-- name: Create virtualenvwrapper directory for GIS.lab Web
-  file:
-    path: /usr/share/virtualenvwrapper
-    state: directory
+# GIS.lab Web
+- name: Download virtualenvwrapper for GIS.lab Web
+  get_url:
+    url: "http://cz.archive.ubuntu.com/ubuntu/pool/{{ item }}"
+    dest: /tmp
+  with_items:
+    - main/s/stevedore/python-stevedore_0.14.1-1_all.deb
+    - universe/v/virtualenv-clone/virtualenv-clone_0.2.4-1_all.deb
+    - universe/v/virtualenvwrapper/virtualenvwrapper_4.1.1-1_all.deb
   tags: ['gislab-web']
   become: yes
   
-- name: Fix virtualenvwrapper package for GIS.lab Web
-  copy:
-    src: ../files/virtualenvwrapper.sh
-    dest: /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+- name: Install virtualenvwrapper for GIS.lab Web
+  command: dpkg -i "/tmp/{{ item }}"
+  with_items:
+    - python-stevedore_0.14.1-1_all.deb
+    - virtualenv-clone_0.2.4-1_all.deb
+    - virtualenvwrapper_4.1.1-1_all.deb 
   tags: ['gislab-web']
   become: yes
-  
-- name: Clone gislab-web repository
-  git:
-    repo: https://github.com/gislab-npo/gislab-web.git
-    dest: "/home/{{ ansible_user }}/gislab-web"
-  tags: ['gislab-web']
