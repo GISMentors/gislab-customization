@@ -9,3 +9,25 @@
     - git
     - emacs23-nox
     - gdal-bin
+  become: yes
+  
+# GIS.lab Web (see gislab-web/provision/roles/gislab-web/tasks/main.yml)
+- name: Create virtualenvwrapper directory for GIS.lab Web
+  file:
+    path: /usr/share/virtualenvwrapper
+    state: directory
+  tags: ['gislab-web']
+  become: yes
+  
+- name: Fix virtualenvwrapper package for GIS.lab Web
+  copy:
+    src: ../files/virtualenvwrapper.sh
+    dest: /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+  tags: ['gislab-web']
+  become: yes
+  
+- name: Clone gislab-web repository
+  git:
+    repo: https://github.com/gislab-npo/gislab-web.git
+    dest: "/home/{{ ansible_user }}/gislab-web"
+  tags: ['gislab-web']
