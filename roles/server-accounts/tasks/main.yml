@@ -37,6 +37,25 @@
     group: root
     mode: 0655
 
+- name: Download VFK plugin
+  git:
+    repo: https://github.com/ctu-geoforall-lab/qgis-vfk-plugin.git
+    dest: /opt/gislab/system/accounts/skel/.qgis2/python/plugins/qgis-vfk-plugin-release-2_0
+    version: release-2_0
+
+- name: Clone gislab-web repository
+  git:
+    repo: https://github.com/gislab-npo/gislab-web.git
+    dest: "/home/{{ ansible_user }}/gislab-web"
+  tags: ['gislab-web']
+
+- name: Copy GIS.lab Web plugin
+  command: cp -r "/home/{{ ansible_user }}/gislab-web/qgis/gislab_web" .
+  args:
+    chdir: /opt/gislab/system/accounts/skel/.qgis2/python/plugins/
+    creates: gislab_web
+  tags: ['gislab-web']
+
 - name: Check if grassdata exists
   stat:
     path: /opt/gislab/system/accounts/skel/.grassdata

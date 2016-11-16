@@ -31,9 +31,3 @@
     - virtualenvwrapper_4.1.1-1_all.deb 
   tags: ['gislab-web']
   become: yes
-
-- name: Clone gislab-web repository
-  git:
-    repo: https://github.com/gislab-npo/gislab-web.git
-    dest: "/home/{{ ansible_user }}/gislab-web"
-  tags: ['gislab-web']
