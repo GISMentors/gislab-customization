@@ -1,6 +1,7 @@
 # Perform GISMentors customization for GIS.lab
 
 - hosts: all
+  become: yes
   vars:
     # service-data-db
     dbname: gismentors
