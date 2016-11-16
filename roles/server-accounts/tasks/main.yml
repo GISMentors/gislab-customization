@@ -43,6 +43,16 @@
     dest: /opt/gislab/system/accounts/skel/.qgis2/python/plugins/qgis-vfk-plugin-release-2_0
     version: release-2_0
 
+- name: Download RUIAN plugin
+  git:
+    repo: https://github.com/ctu-geoforall-lab/qgis-ruian-plugin.git
+    dest: /opt/gislab/system/accounts/skel/.qgis2/python/plugins/qgis-ruian-plugin-master
+
+- name: Download GDAL-VFR library
+  git:
+    repo: https://github.com/ctu-geoforall-lab/gdal-vfr.git
+    dest: /opt/gislab/system/accounts/skel/.qgis2/python/plugins/qgis-ruian-plugin-master/gdal_vfr
+
 - name: Clone gislab-web repository
   git:
     repo: https://github.com/gislab-npo/gislab-web.git

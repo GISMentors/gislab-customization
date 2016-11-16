@@ -33,4 +33,5 @@
     - { role: client-packages, tags: ['client-packages'] }
     - { role: client-nvidia, tags: ['client-nvidia'] }
     - { role: client-image, tags: ['client-image'] }
+    - { role: user-accounts, tags: ['user-accounts'] }
     - { role: customization-done, tags: ['customization-done'] }
