@@ -132,4 +132,6 @@ ldconfig2
 
 python_update
 
+rm -rf /opt/gislab/system/clients/desktop/root/usr/lib/python2.7/dist-packages/osgeo/
+
 exit 0
