@@ -1,0 +1,4 @@
+# Create user accouns (pc01-pc21)
+
+- name: Create user accounts (pc01-pc21)
+  script: ../../scripts/create-users-pc.sh
