@@ -11,6 +11,9 @@ GRANT all ON SCHEMA $GISLAB_USER to $GISLAB_USER" | \
     fi
 }
 
+# workaround - could not change directory to "/mnt/home/gislab"
+cd /tmp
+
 create_schema gismentors
     
 exit 0

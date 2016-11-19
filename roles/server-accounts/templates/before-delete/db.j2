@@ -7,6 +7,9 @@ drop_schema() {
     fi
 }
 
+# workaround - could not change directory to "/mnt/home/gislab"
+cd /tmp
+
 drop_schema gismentors
 
 exit 0
