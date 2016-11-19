@@ -105,7 +105,7 @@ python_update() {
     # fix GDAL bindigs (workaround)
     sudo rm -rf /opt/gislab/system/clients/desktop/root/usr/lib/python2.7/dist-packages/osgeo/ \
          /opt/gislab/system/clients/desktop/root/usr/lib/python2.7/dist-packages/osgeo-disabled
-    echo "/usr/local/lib/python2.7/site-packages/osgeo/" > /tmp/gdal.pth
+    echo "/usr/local/lib/python2.7/site-packages" > /tmp/gdal.pth
     sudo mv /tmp/gdal.pth /opt/gislab/system/clients/desktop/root/usr/lib/python2.7/dist-packages
 }
 
