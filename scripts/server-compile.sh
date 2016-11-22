@@ -96,6 +96,15 @@ proj() {
     make install
 }
 
+postgis() {
+    cd /mnt/home/gislab/src/postgis-2.1.8
+    ./configure --prefix=/usr/local
+    make
+    make install
+    sudo ln -sf /usr/local/lib/libgdal.so.20 /usr/lib/libgdal.so.1
+    sudo ldconfig
+}
+
 python_update() {
     pip install --upgrade Fiona
     pip install --upgrade rasterio
@@ -135,6 +144,8 @@ ldconfig2
 
 qgis
 ldconfig2
+
+postgis
 
 python_update
 

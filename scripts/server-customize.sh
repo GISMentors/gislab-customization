@@ -31,6 +31,11 @@ if [ ! -d $HOMEDIR/src/proj_49 ] ; then
     git clone https://github.com/OSGeo/proj.4.git $HOMEDIR/src/proj_49
     (cd $HOMEDIR/src/proj_49 && git branch 4.9 origin/4.9 && git checkout 4.9)
 fi
+if [ ! -d $HOMEDIR/src/postgis-2.1.8 ] ; then
+    wget http://download.osgeo.org/postgis/source/postgis-2.1.8.tar.gz
+    tar xvzf postgis-2.1.8.tar.gz 
+fi
+
 chown gislab:gislabusers $HOMEDIR/src -R
 
 exit 0
