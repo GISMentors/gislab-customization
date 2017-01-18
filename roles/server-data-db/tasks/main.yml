@@ -44,7 +44,7 @@
     db_created.changed
 
 - name: Grant privileges on gismentors database
-  shell: psql -U postgres "{{ dbname }}" -f "{{ home_dir }}/gislab-customization/scripts/privileges.sh"
+  shell: "{{ home_dir }}/gislab-customization/scripts/privileges.sh"
   when:
     db_created.changed
 
