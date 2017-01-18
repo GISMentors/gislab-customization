@@ -8,8 +8,8 @@ fi
 USER="postgres"
 
 function grant_priv() {
-    echo "GRANT USAGE on SCHEMA public to gislabusers; 
-    GRANT SELECT ON ALL TABLES IN SCHEMA public TO gislabusers;" |
+    echo "GRANT USAGE on SCHEMA $1 to gislabusers;
+    GRANT SELECT ON ALL TABLES IN SCHEMA $1 TO gislabusers;" |
         sudo psql -U $USER $DB
 }
 
