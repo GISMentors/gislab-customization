@@ -9,6 +9,8 @@
     - git
     - emacs23-nox
     - gdal-bin
+    - libjs-sphinxdoc   # needed for virtualenvwrapper
+    - libjs-underscore  # needed for virtualenvwrapper
   become: yes
   
 # GIS.lab Web
