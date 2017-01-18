@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$1" ] ; then
+if [ -n "$1" ] ; then
     DB="$1"
 else
     DB="gismentors"
