@@ -1,14 +1,5 @@
 # Desktop client customization
 
-- name: Update desktop files (QGIS, GRASS)
-  template:
-    src: "applications/{{item}}.j2"
-    dest: "{{ root_dir }}/usr/share/applications/{{ item }}.desktop"
-    mode: 0644
-  with_items:
-    - gislab-desktop
-    - gislab-grass
-  
 - name: Update XFCE configuration
   template:
     src: xfce4/default.j2

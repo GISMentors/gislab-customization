@@ -5,31 +5,18 @@
     name: "{{ item }}"
     update_cache: yes
     install_recommends: no
+    force: yes
   with_items:
-    - git
-    - emacs23-nox
+    - emacs-nox
     - gdal-bin
-    - libjs-sphinxdoc   # needed for virtualenvwrapper
-    - libjs-underscore  # needed for virtualenvwrapper
   become: yes
   
 # GIS.lab Web
-- name: Download virtualenvwrapper for GIS.lab Web
-  get_url:
-    url: "http://cz.archive.ubuntu.com/ubuntu/pool/{{ item }}"
-    dest: /tmp
-  with_items:
-    - main/s/stevedore/python-stevedore_0.14.1-1_all.deb
-    - universe/v/virtualenv-clone/virtualenv-clone_0.2.4-1_all.deb
-    - universe/v/virtualenvwrapper/virtualenvwrapper_4.1.1-1_all.deb
-  tags: ['gislab-web']
-  become: yes
-  
 - name: Install virtualenvwrapper for GIS.lab Web
-  command: dpkg -i "/tmp/{{ item }}"
+  apt:
+    name: "{{ item }}"
+    install_recommends: no
   with_items:
-    - python-stevedore_0.14.1-1_all.deb
-    - virtualenv-clone_0.2.4-1_all.deb
-    - virtualenvwrapper_4.1.1-1_all.deb 
+    - virtualenvwrapper
   tags: ['gislab-web']
   become: yes

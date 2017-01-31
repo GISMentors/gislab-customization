@@ -12,16 +12,7 @@
   args:
     executable: /bin/bash
 
-- name: Install Fiona
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    pip install Fiona==1.6.4
-  args:
-    executable: /bin/bash
-
-- name: Install Rasterio, Shapely, OWSLib
+- name: Install Rasterio, Shapely, OWSLib, Fiona
   shell: >
     export DEBIAN_FRONTEND=noninteractive
     &&
@@ -33,41 +24,7 @@
     - rasterio
     - shapely
     - OWSLib
-
-- name: Create /etc/apt/sources.list.d if not exists
-  file:
-    path: "{{ root_dir }}/etc/apt/sources.list.d"
-    state: directory
-
-- name: Add gismentors PPA repository
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    add-apt-repository --yes ppa:landa-martin/gislab-testing
-  args:
-    executable: /bin/bash
-
-- name: Install packages from gismentors PPA repository
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    apt-get update
-    &&
-    chroot {{ root_dir }}
-    apt-get {{ apt_get_opts }} install {{ packages_ppa|join(' ') }}
-  args:
-    executable: /bin/bash
-
-- name: Fix numpy version (for GRASS)
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    pip install numpy==1.8
-  args:
-    executable: /bin/bash
+    - Fiona
 
 - name: Remove unused packages
   shell: >

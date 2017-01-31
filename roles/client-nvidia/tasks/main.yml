@@ -4,20 +4,13 @@
   shell: grep GISLAB_UNIQUE_ID /etc/gislab_version | grep gislab-unit | wc -l
   register: gislab_unit
 
-- name: Add Ubuntu restricted repository
-  apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu/ precise restricted"
-  when:
-    gislab_unit.rc == 1
-
 - name: Install nvidia packages
   apt:
     name: "{{ item }}"
     update_cache: yes
     install_recommends: no
   with_items:
-    - nvidia-319
-    - nvidia-settings-319
+    - nvidia-current
     - nvidia-settings
   when:
     gislab_unit.rc == 1
