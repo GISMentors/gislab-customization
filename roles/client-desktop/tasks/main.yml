@@ -5,3 +5,12 @@
     src: xfce4/default.j2
     dest: "{{ root_dir }}/etc/xdg/xdg-xubuntu/xfce4/panel/default.xml"
     mode: 0644
+
+- name: Fix QGIS GRASS processing bug
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    ln -s /usr/bin/grass72 /usr/bin/grass70
+  args:
+    executable: /bin/bash
