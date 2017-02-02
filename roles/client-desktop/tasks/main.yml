@@ -1,8 +1,8 @@
 # Desktop client customization
 
 - name: Update XFCE configuration
-  template:
-    src: xfce4/default.j2
+  copy:
+    src: xfce4/default.xml
     dest: "{{ root_dir }}/etc/xdg/xdg-xubuntu/xfce4/panel/default.xml"
     mode: 0644
 
@@ -11,6 +11,6 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    ln -s /usr/bin/grass72 /usr/bin/grass70
+    ln -sf /usr/bin/grass72 /usr/bin/grass70
   args:
     executable: /bin/bash
