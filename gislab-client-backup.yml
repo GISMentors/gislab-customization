@@ -1,18 +1,37 @@
-- hosts: all
-  sudo: yes
+# Backup desktop client
 
-  vars:
-    SCRIPT: scripts/client-backup.sh
+- hosts: all
+  become: yes
 
   tasks:
-    - name: Copy script to server
-      copy: src={{ SCRIPT }}
-            dest=/tmp/backup.sh
-            owner=root group=root mode=0755
+    - name: Define backup name (based on current date)
+      shell: >
+        date -I
+      register: current_date
 
-    - name: Run script
-      shell: /tmp/backup.sh
+    - name: Set backup name fact
+      set_fact:
+        backup_name: "{{ current_date.stdout_lines[0] }}"
 
-    - name: Remove script from server
-      file: path=/tmp/backup.sh
-            state=absent
+    # This module has been added in Ansible version 2.3
+    # - name: Backup client root
+    #   archive:
+    #     path: /opt/gislab/system/clients/desktop/root
+    #     dest: "/storage/backup/client-desktop-root-{{ backup_name }}.tar.bz2"
+    #     format: bz2
+
+    - name: Backup client root
+      shell: >
+        tar cjf "/storage/backup/client-desktop-root-{{ backup_name }}.tar.bz2"
+        /opt/gislab/system/clients/desktop/root
+
+    - name: Backup client image
+      shell: >
+        cp -a /opt/gislab/system/clients/desktop/image 
+        "/storage/backup/client-desktop-image-{{ backup_name }}"
+
+    - name: Backup done
+      debug:
+        msg:
+          - "Client root archived as /storage/backup/client-desktop-root-{{ backup_name }}.tar.bz2"
+          - "Client image archived as /storage/backup/client-desktop-image-{{ backup_name }}"
