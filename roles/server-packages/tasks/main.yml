@@ -10,13 +10,3 @@
     - emacs-nox
     - gdal-bin
   become: yes
-  
-# GIS.lab Web
-- name: Install virtualenvwrapper for GIS.lab Web
-  apt:
-    name: "{{ item }}"
-    install_recommends: no
-  with_items:
-    - virtualenvwrapper
-  tags: ['gislab-web']
-  become: yes
