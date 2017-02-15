@@ -1,4 +1,9 @@
 # Create user accouns (pc01-pc21)
 
 - name: Create user accounts (pc01-pc21)
-  script: ../../../scripts/create-users-pc.sh
+  shell: >
+    rm -f /mnt/home/{{ item }}/.gislab/session.lock;
+    gislab-deluser -f {{ item }};
+    gislab-adduser -g {{ item }} -l b870 -m {{ item }}@gislab.fsv.cvut.cz -p b870 {{ item }}
+  with_sequence: start=1 end=21 format=pc%02d
+  become: yes
