@@ -1,14 +1,16 @@
 packages:
-  - gedit
   - geany
   - sqlitebrowser
-  - python-pip
-  - python-dev
-  - libgdal-dev
+#  - python-pip
+#  - python-dev
   - python-rpy2
   - ipython-notebook
   - python-tk
   - postgis
+  - python-rasterio
+  - python-shapely
+  - python-fiona
+  - python-owslib
 
 packages_stats:
   - r-base

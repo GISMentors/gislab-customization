@@ -1,6 +1,6 @@
 # Client packages installation
 
-- name: Install custom packages
+- name: Install custom GIS packages
   shell: >
     export DEBIAN_FRONTEND=noninteractive
     &&
@@ -11,20 +11,6 @@
     apt-get {{ apt_get_opts }} install {{ packages|join(' ') }}
   args:
     executable: /bin/bash
-
-- name: Install Rasterio, Shapely, OWSLib, Fiona
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    pip install {{ item }}
-  args:
-    executable: /bin/bash
-  with_items:
-    - rasterio
-    - shapely
-    - OWSLib
-    - Fiona
 
 - name: Install r-base package and dependecies
   shell: >
@@ -53,7 +39,7 @@
     executable: /bin/bash
   tags: ['client-packages-stats']
 
-- name: Install R packges
+- name: Install R packages
   shell: >
     export DEBIAN_FRONTEND=noninteractive
     &&
@@ -77,11 +63,11 @@
     executable: /bin/bash
   tags: ['client-packages-stats']
 
-- name: Remove unused packages
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    apt-get {{ apt_get_opts }} autoremove
-  args:
-    executable: /bin/bash
+# - name: Remove unused packages
+#   shell: >
+#     export DEBIAN_FRONTEND=noninteractive
+#     &&
+#     chroot {{ root_dir }}
+#     apt-get {{ apt_get_opts }} autoremove
+#   args:
+#     executable: /bin/bash
