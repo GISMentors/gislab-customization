@@ -26,6 +26,57 @@
     - OWSLib
     - Fiona
 
+- name: Install r-base package and dependecies
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    apt-get {{ apt_get_opts }} install {{ packages_stats|join(' ') }}
+  args:
+    executable: /bin/bash
+  tags: ['client-packages-stats']
+
+- name: Download rstudio package
+  get_url:
+    url: "{{ rstudio_url }}/{{ rstudio_pkg }}"
+    dest: "{{ root_dir }}/var/cache/apt/archives/{{ rstudio_pkg }}"
+    force: no
+  tags: ['client-packages-stats']
+
+- name: Install rstudio package
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    gdebi {{ gdebi_get_opts }} /var/cache/apt/archives/{{ rstudio_pkg }}
+  args:
+    executable: /bin/bash
+  tags: ['client-packages-stats']
+
+- name: Install R packges
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    /usr/bin/Rscript --slave --no-save --no-restore-history
+    -e "if (! ('{{ item }}' %in% installed.packages()[,'Package']))
+    install.packages(pkgs='{{ item }}', repos=c('http://www.freestatistics.org/cran/'))"
+  with_items:
+    - sp
+    - maptools
+    - classInt
+    - RColorBrewer
+    - lattice
+    - rgdal
+    - maps
+    - raster
+    - gstat
+    - rgeos
+    - OpenStreetMap
+  args:
+    executable: /bin/bash
+  tags: ['client-packages-stats']
+
 - name: Remove unused packages
   shell: >
     export DEBIAN_FRONTEND=noninteractive

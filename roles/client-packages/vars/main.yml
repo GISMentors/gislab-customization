@@ -10,4 +10,12 @@ packages:
   - python-tk
   - postgis
 
+packages_stats:
+  - r-base
+  - gdebi-core
+
+rstudio_url: https://download1.rstudio.org
+rstudio_pkg: rstudio-1.0.136-amd64.deb
+
 apt_get_opts: "--assume-yes --force-yes"
+gdebi_get_opts: "--non-interactive"
