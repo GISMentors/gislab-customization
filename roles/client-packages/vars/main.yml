@@ -1,16 +1,9 @@
 packages:
-  - geany
-  - sqlitebrowser
-#  - python-pip
-#  - python-dev
+  - python-pip
+  - python-virtualenv
   - python-rpy2
   - ipython-notebook
   - python-tk
-  - postgis
-  - python-rasterio
-  - python-shapely
-  - python-fiona
-  - python-owslib
 
 packages_stats:
   - r-base
