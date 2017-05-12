@@ -1,4 +1,5 @@
 packages:
+  - exiftool
   - python-pip
   - python-virtualenv
   - python3-fiona
