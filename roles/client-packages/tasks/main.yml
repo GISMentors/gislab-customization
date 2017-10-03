@@ -5,10 +5,10 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    apt-get update
+    apt update
     &&
     chroot {{ root_dir }}
-    apt-get {{ apt_get_opts }} install {{ packages|join(' ') }}
+    apt {{ apt_get_opts }} install {{ packages|join(' ') }}
   args:
     executable: /bin/bash
 
@@ -17,7 +17,7 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    apt-get {{ apt_get_opts }} install {{ packages_stats|join(' ') }}
+    apt {{ apt_get_opts }} install {{ packages_stats|join(' ') }}
   args:
     executable: /bin/bash
   tags: ['client-packages-stats']
@@ -68,6 +68,6 @@
 #     export DEBIAN_FRONTEND=noninteractive
 #     &&
 #     chroot {{ root_dir }}
-#     apt-get {{ apt_get_opts }} autoremove
+#     apt {{ apt_get_opts }} autoremove
 #   args:
 #     executable: /bin/bash

@@ -9,7 +9,7 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    apt-get {{ apt_get_opts }} install {{ item }}
+    apt {{ apt_get_opts }} install {{ item }}
   args:
     executable: /bin/bash
   with_items:
@@ -31,7 +31,7 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    apt-get {{ apt_get_opts }} install {{ item }}
+    apt {{ apt_get_opts }} install {{ item }}
   args:
     executable: /bin/bash
   with_items:
