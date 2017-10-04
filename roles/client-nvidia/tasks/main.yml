@@ -35,7 +35,6 @@
   args:
     executable: /bin/bash
   with_items:
-    - nvidia-current
-    - nvidia-settings
+    - nvidia-340
   when:
     gislab_unit.rc == 0
