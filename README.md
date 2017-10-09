@@ -1,6 +1,6 @@
 # GIS.lab customization for GISMentors training
 
-GIS.lab: http://web.gislab.io/
+GIS.lab: http://gislab-npo.github.io/gislab/
 
 ## Usage
 
