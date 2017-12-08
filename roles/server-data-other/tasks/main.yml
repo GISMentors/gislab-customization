@@ -12,23 +12,23 @@
 
 - name: Download DMT file
   get_url:
-    url: http://training.gismentors.eu/geodata/eu-dem/dmt.zip
-    dest: "{{ data_dir }}/dmt.zip"
+    url: http://training.gismentors.eu/geodata/eu-dem/dmt100.zip
+    dest: "{{ data_dir }}/dmt100.zip"
   register:
     dmt
 
 - name: Unpack DMT file
   unarchive:
-    src: "{{ data_dir }}/dmt.zip"
+    src: "{{ data_dir }}/dmt100.zip"
     dest: "{{ data_dir }}"
     copy: no
   when: dmt.changed
 
-- name: Create resampled DMT
-  shell: gdalwarp -t_srs EPSG:5514 -r cubic -tr 100 100 dmt.tif dmt100.tif
-  args:
-    chdir: "{{ data_dir }}"
-  when: dmt.changed
+# - name: Create resampled DMT
+#   shell: gdalwarp -t_srs EPSG:5514 -r cubic -tr 100 100 dmt.tif dmt100.tif
+#   args:
+#     chdir: "{{ data_dir }}"
+#   when: dmt.changed
 
 - name: Download txt data
   get_url:
