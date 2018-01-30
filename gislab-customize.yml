@@ -2,6 +2,7 @@
 
 - hosts: all
   become: yes
+
   vars:
     # service-data-db
     dbname: gismentors
@@ -21,6 +22,12 @@
   #     prompt: "Cleanup data?"
   #     default: "N"
 
+  vars_prompt:
+    - name: nvidia_client
+      prompt: "Do you want to install Nvidia client drivers (Y/N)?"
+      default: "N"
+      private: no
+
   roles:
     - { role: server-accounts, tags: ['server-accounts'] }
     - { role: server-data-cleanup, tags: ['server-data-cleanup'] }
@@ -30,7 +37,8 @@
     - { role: server-data-other, tags: ['server-data-other'] }
     - { role: client-desktop, tags: ['client-desktop'] }
     - { role: client-packages, tags: ['client-packages'] }
-    - { role: client-nvidia, tags: ['client-nvidia'] }
+    - { role: client-nvidia, tags: ['client-nvidia'],
+        when: nvidia_client == "Y" or nvidia_client == "y" }
     - { role: client-image, tags: ['client-image'] }
     - { role: user-accounts, tags: ['user-accounts'] }
     - { role: customization-done, tags: ['customization-done'] }

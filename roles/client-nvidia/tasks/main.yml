@@ -3,6 +3,7 @@
 - name: Check if we are running GIS.lab Unit
   shell: grep GISLAB_UNIQUE_ID /etc/gislab_version
   register: gislab_unit
+  changed_when: no
 
 - name: Install software-properties-common package
   shell: >
@@ -23,6 +24,15 @@
     &&
     chroot {{ root_dir }}
     add-apt-repository --update --yes "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) restricted"
+  when:
+    gislab_unit.rc == 0
+
+- name: Update apt cache
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    apt update
   when:
     gislab_unit.rc == 0
 
