@@ -29,6 +29,7 @@
       private: no
 
   roles:
+    - { role: server-packages, tags: ['server-packages'] }
     - { role: server-accounts, tags: ['server-accounts'] }
     - { role: server-data-cleanup, tags: ['server-data-cleanup'] }
     #when: run_cleanup == "Y" or run_cleanup == "y" }

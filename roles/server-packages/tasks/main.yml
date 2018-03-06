@@ -1,0 +1,12 @@
+# Server packages installation
+
+- name: Switch UbuntuGIS to Unstable
+  lineinfile:
+    dest: /etc/apt/sources.list
+    regexp: '^(.*)ubuntugis/ppa(.*)$'
+    line: '\1ubuntugis/ubuntugis-unstable\2'
+    backrefs: yes
+
+- name: Update to UbuntuGIS Unstable
+  apt:
+    upgrade: dist
