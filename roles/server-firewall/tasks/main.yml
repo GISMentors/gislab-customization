@@ -1,0 +1,7 @@
+# Server simple firewall installation
+
+- name: Enable simple firewall
+  copy:
+    src: rc.local
+    dest: /etc/rc.local
+    mode: 0700
