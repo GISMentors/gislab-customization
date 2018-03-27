@@ -65,7 +65,7 @@
     chroot {{ root_dir }}
     /usr/bin/Rscript --slave --no-save --no-restore-history
     -e "if (! ('{{ item }}' %in% installed.packages()[,'Package']))
-    install.packages(pkgs='{{ item }}', repos=c('http://www.freestatistics.org/cran/'))"
+    install.packages(pkgs='{{ item }}', repos=c('https://cloud.r-project.org/'))"
   with_items:
     - sp
     - maptools
