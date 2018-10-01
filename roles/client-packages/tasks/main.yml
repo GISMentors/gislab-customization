@@ -1,24 +1,5 @@
 # Client packages installation
 
-- name: Switch UbuntuGIS to Unstable
-  lineinfile:
-    dest: /opt/gislab/system/clients/desktop/root/etc/apt/sources.list
-    regexp: '^(.*)ubuntugis/ppa(.*)$'
-    line: '\1ubuntugis/ubuntugis-unstable\2'
-    backrefs: yes
-
-- name: Update to UbuntuGIS Unstable
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    apt update
-    &&
-    chroot {{ root_dir }}
-    apt {{ apt_get_opts }} dist-upgrade
-  args:
-    executable: /bin/bash
-
 - name: Install custom GIS packages
   shell: >
     export DEBIAN_FRONTEND=noninteractive
