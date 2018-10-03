@@ -18,21 +18,12 @@
   when:
     gislab_unit.rc == 0
 
-- name: Add Ubuntu restricted repository
+- name: Add Graphics Drivers PPA repository
   shell: >
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    add-apt-repository --update --yes "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) restricted"
-  when:
-    gislab_unit.rc == 0
-
-- name: Update apt cache
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    apt update
+    add-apt-repository --update --yes ppa:graphics-drivers/ppa
   when:
     gislab_unit.rc == 0
 
@@ -45,6 +36,6 @@
   args:
     executable: /bin/bash
   with_items:
-    - nvidia-340
+    - nvidia-396
   when:
     gislab_unit.rc == 0
