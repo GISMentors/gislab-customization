@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Drop user schema from gismentors db
 
 drop_schema() {
@@ -10,6 +10,9 @@ drop_schema() {
 # workaround - could not change directory to "/mnt/home/gislab"
 cd /tmp
 
-drop_schema gismentors
+users=`sudo gislab-listusers -g gismentors | grep 'uid:' | cut -d':' -f2`
+if [[ $users =~ $GISLAB_USER ]]; then 
+    drop_schema gismentors
+fi
 
 exit 0

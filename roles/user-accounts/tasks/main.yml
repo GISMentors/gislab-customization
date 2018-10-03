@@ -1,9 +1,13 @@
 # Create user accouns (pc01-pc21)
 
+- name: Create user group gismentors
+  shell: >
+    gislab-addgroup gismentors || true
+    
 - name: Create user accounts (pc01-pc21)
   shell: >
     rm -f /mnt/home/{{ item }}/.gislab/session.lock;
     gislab-deluser -f {{ item }};
-    gislab-adduser -g {{ item }} -l {{ user_lastname}} -m {{ item }}@gislab.io -p {{ user_passwd }} {{ item }}
+    gislab-adduser -g {{ item }} -l {{ user_lastname}} -m {{ item }}@gislab.io -a gismentors -p {{ user_passwd }} {{ item }}
   with_sequence: start=1 end=21 format=pc%02d
   become: yes

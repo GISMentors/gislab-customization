@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Create new schema in gismentors db
 
 create_schema() {
@@ -14,6 +14,9 @@ GRANT all ON SCHEMA $GISLAB_USER to $GISLAB_USER" | \
 # workaround - could not change directory to "/mnt/home/gislab"
 cd /tmp
 
-create_schema gismentors
-    
+users=`sudo gislab-listusers -g gismentors | grep 'uid:' | cut -d':' -f2`
+if [[ $users =~ $GISLAB_USER ]]; then 
+    create_schema gismentors
+fi
+  
 exit 0
