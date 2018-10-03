@@ -29,7 +29,6 @@
       private: no
 
   roles:
-    - { role: server-packages, tags: ['server-packages'] }
     #- { role: server-firewall, tags: ['server-firewall'] }
     - { role: server-accounts, tags: ['server-accounts'] }
     - { role: server-data-cleanup, tags: ['server-data-cleanup'] }
