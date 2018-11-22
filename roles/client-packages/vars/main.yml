@@ -1,13 +1,6 @@
 packages:
   - exiftool
-  - python-pip
   - python-virtualenv
-  - python3-fiona
-  - python3-gdal
-  - python3-owslib
-  - python3-pip
-  - python3-rasterio
-  - python3-shapely
   - python3-virtualenv
   - python-rpy2
   - ipython-notebook
@@ -19,7 +12,7 @@ packages_stats:
   - gdebi-core
 
 rstudio_url: https://download1.rstudio.org
-rstudio_pkg: rstudio-xenial-1.1.456-amd64.deb
+rstudio_pkg: rstudio-xenial-1.1.463-amd64.deb
 
 apt_get_opts: "--assume-yes --force-yes"
 gdebi_get_opts: "--non-interactive"
