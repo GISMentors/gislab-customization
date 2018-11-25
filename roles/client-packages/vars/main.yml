@@ -3,7 +3,7 @@ packages:
   - python-virtualenv
   - python3-virtualenv
   - python-rpy2
-  - ipython-notebook
+  - jupyter-notebook
   - python-tk
   - software-properties-common
 
