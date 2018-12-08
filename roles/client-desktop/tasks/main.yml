@@ -5,3 +5,21 @@
     src: xfce4/default.xml
     dest: "{{ root_dir }}/etc/xdg/xdg-xubuntu/xfce4/panel/default.xml"
     mode: 0644
+
+- name: Install QGIS VFK plugin
+  git:
+    repo: https://github.com/ctu-geoforall-lab/qgis-vfk-plugin.git
+    dest: "{{ root_dir }}/usr/share/qgis/python/plugins/qgis-vfk-plugin"
+    version: release-2_0
+
+- name: Install QGIS RUIAN plugin
+  git:
+    repo: https://github.com/ctu-geoforall-lab/qgis-ruian-plugin.git
+    dest: "{{ root_dir }}/usr/share/qgis/python/plugins/qgis-ruian-plugin"
+    version: release-1_0
+    
+- name: Install GDAL-VFR library
+  git:
+    repo: https://github.com/ctu-geoforall-lab/gdal-vfr.git
+    dest: "{{ root_dir }}/usr/share/qgis/python/plugins/qgis-ruian-plugin/gdal_vfr"
+    version: release-2_0
