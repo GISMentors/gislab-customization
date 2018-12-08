@@ -5,37 +5,23 @@
   register: gislab_unit
   changed_when: no
 
-- name: Install software-properties-common package
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    apt {{ apt_get_opts }} install {{ item }}
-  args:
-    executable: /bin/bash
-  with_items:
-    - software-properties-common
-  when:
-    gislab_unit.rc == 0
-
 - name: Add Graphics Drivers PPA repository
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    add-apt-repository --update --yes ppa:graphics-drivers/ppa
-  when:
-    gislab_unit.rc == 0
+  lineinfile:
+    path: "{{ root_dir }}/etc/apt/sources.list"
+    line: "deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main"
 
 - name: Install nvidia packages
   shell: >
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    apt {{ apt_get_opts }} install {{ item }}
+    apt update
+    &&
+    chroot {{ root_dir }}
+    apt {{ apt_get_opts }} install {{ item }} || apt upgrade
   args:
     executable: /bin/bash
   with_items:
-    - nvidia-396
+    - nvidia-driver-396
   when:
     gislab_unit.rc == 0
