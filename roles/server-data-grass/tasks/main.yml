@@ -68,12 +68,12 @@
   command: cp -r "{{ repository_grassdata }}/{{ grass_location }}/user1" "{{ user_grassdata }}/{{ grass_location }}/gislab"
   when: gismentors_loc.changed
 
-- name: Update search path (gislab mapset)
-  replace:
-    dest: "{{ user_grassdata }}/{{ grass_location }}/gislab/SEARCH_PATH"
-    regexp: "user1"
-    replace: "gislab"
-  when: gismentors_loc.changed
+# - name: Update search path (gislab mapset)
+#   replace:
+#     dest: "{{ user_grassdata }}/{{ grass_location }}/gislab/SEARCH_PATH"
+#     regexp: "user1"
+#     replace: "gislab"
+#   when: gismentors_loc.changed
 
 - name: Configure GRASS
   template:

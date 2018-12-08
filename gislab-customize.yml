@@ -15,31 +15,19 @@
     config_dir: /opt/gislab/system/accounts/skel/.grass7
     grass_location: gismentors
     # client
-    root_dir: /opt/gislab/system/clients/desktop/root  
-
-  # vars_prompt:
-  #   - name: run_cleanup
-  #     prompt: "Cleanup data?"
-  #     default: "N"
-
-  vars_prompt:
-    - name: nvidia_client
-      prompt: "Do you want to install Nvidia client drivers (Y/N)?"
-      default: "N"
-      private: no
+    root_dir: /opt/gislab/system/clients/desktop/root
 
   roles:
     #- { role: server-firewall, tags: ['server-firewall'] }
     - { role: server-accounts, tags: ['server-accounts'] }
     - { role: server-data-cleanup, tags: ['server-data-cleanup'] }
-    #when: run_cleanup == "Y" or run_cleanup == "y" }
     - { role: server-data-db, tags: ['server-data-db']}
     - { role: server-data-grass, tags: ['server-data-grass'] }
     - { role: server-data-other, tags: ['server-data-other'] }
     - { role: client-desktop, tags: ['client-desktop'] }
     - { role: client-packages, tags: ['client-packages'] }
     - { role: client-nvidia, tags: ['client-nvidia'],
-        when: nvidia_client == "Y" or nvidia_client == "y" }
+        when: NVIDIA }
     - { role: client-image, tags: ['client-image'] }
     - { role: user-accounts, tags: ['user-accounts'] }
     - { role: customization-done, tags: ['customization-done'] }
