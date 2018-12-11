@@ -54,9 +54,14 @@
     state: directory
   register: gisdata
 
-- name: Export data as shapefiles
+- name: Export data as Esri Shapefiles
   shell: "{{ home_dir }}/dataset/postgis/export_shp.sh {{ data_dir }}/shp"
   when: 
+    gisdata.changed
+
+- name: Export data as OGC GeoPackage
+  shell: "{{ home_dir }}/dataset/postgis/export_gpkg.sh {{ data_dir }}/gpkg"
+  when:
     gisdata.changed
 
 - name: Change data files ownership

@@ -1,4 +1,4 @@
-# Perform GISMentors customization for GIS.lab
+# Perform GIS.lab customization for GISMentors
 
 - hosts: all
   become: yes
