@@ -24,18 +24,30 @@
     group: root
     mode: 0755
 
-- name: Create QGIS config directory
+- name: Create QGIS2/3 config directory
   file:
-    path: /opt/gislab/custom/accounts/files/.config/QGIS
+    path: "{{ item }}"
     state: directory
+  with_items:
+    - /opt/gislab/custom/accounts/files/.config/QGIS
+    - /opt/gislab/custom/accounts/files/.local/share/QGIS/QGIS3/profiles/default/QGIS
 
-- name: QGIS desktop customization
+- name: QGIS2/3 desktop customization
   template:
-    src: config/QGIS/QGIS2.j2
-    dest: /opt/gislab/custom/accounts/files/.config/QGIS/QGIS2.conf
+    src: "{{ item.src }}"
+    dest: "{{ item.dst }}"
     owner: root
     group: root
     mode: 0655
+  with_items:
+    - {
+    src: config/QGIS/QGIS2.j2,
+    dst: /opt/gislab/custom/accounts/files/.config/QGIS/QGIS2.conf
+    }
+    - {
+    src: config/QGIS/QGIS3.j2,
+    dst: /opt/gislab/custom/accounts/files/.local/share/QGIS/QGIS3/profiles/default/QGIS/QGIS3.ini
+    }
 
 - name: Check if grassdata exists
   stat:
