@@ -7,7 +7,7 @@
   with_items:
     - "{{ data_dir }}"
     - "{{ data_dir }}/geopython"
-    - "{{ data_dir }}/txt"
+    - "{{ data_dir }}/csv"
   register: datadir
 
 - name: Download DMT file
@@ -30,13 +30,14 @@
 #     chdir: "{{ data_dir }}"
 #   when: dmt.changed
 
-- name: Download txt data
-  get_url:
-    url: "https://github.com/GISMentors/qgis-zacatecnik/files/{{ item }}"
-    dest: "{{ data_dir }}/txt"
+- name: Download CSV data
+  copy:
+    src: "{{ home_dir }}/dataset/csv/{{ item }}"
+    dest: "{{ data_dir }}/csv"
+    remote_src: yes
   with_items:
-    - 39270/export.txt
-    - 39271/xy_data.txt
+    - export.csv
+    - xy_data.csv
   when:
     datadir.changed
 
