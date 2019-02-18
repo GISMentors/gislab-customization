@@ -16,10 +16,10 @@
   git:
     repo: https://github.com/ctu-geoforall-lab/qgis-ruian-plugin.git
     dest: "{{ root_dir }}/usr/share/qgis/python/plugins/qgis-ruian-plugin"
-    version: release-1_0
+    version: release-1_1
     
 - name: Install GDAL-VFR library
   git:
     repo: https://github.com/ctu-geoforall-lab/gdal-vfr.git
     dest: "{{ root_dir }}/usr/share/qgis/python/plugins/qgis-ruian-plugin/gdal_vfr"
-    version: release-2_0
+    version: release-2_1
