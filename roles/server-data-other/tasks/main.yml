@@ -11,24 +11,16 @@
   register: datadir
 
 - name: Download DMT file
-  get_url:
-    url: http://training.gismentors.eu/geodata/eu-dem/dmt100.zip
-    dest: "{{ data_dir }}/dmt100.zip"
-  register:
-    dmt
-
-- name: Unpack DMT file
   unarchive:
-    src: "{{ data_dir }}/dmt100.zip"
+    src: http://training.gismentors.eu/geodata/eu-dem/dmt100.zip
     dest: "{{ data_dir }}"
-    copy: no
-  when: dmt.changed
+    remote_src: yes
 
-# - name: Create resampled DMT
-#   shell: gdalwarp -t_srs EPSG:5514 -r cubic -tr 100 100 dmt.tif dmt100.tif
-#   args:
-#     chdir: "{{ data_dir }}"
-#   when: dmt.changed
+- name: Download CUZK DMR/DMP sample data
+  unarchive:
+    src: http://geoportal.cuzk.cz/UKAZKOVA_DATA/VYSKOPIS.zip
+    dest: "{{ data_dir }}"
+    remote_src: yes
 
 - name: Download CSV data
   copy:
@@ -42,17 +34,10 @@
     datadir.changed
 
 - name: Download geopython data
-  get_url:
-    url: http://training.gismentors.eu/geodata/geopython/data.tgz
-    dest: "{{ data_dir }}/geopython.tgz"
-  register: geopython_data
-
-- name: Unpack geopython data
   unarchive:
-    src: "{{ data_dir }}/geopython.tgz"
+    src: http://training.gismentors.eu/geodata/geopython/data.tgz
     dest: "{{ data_dir }}/geopython"
-    copy: no
-  when: geopython_data.changed
+    remote_src: yes
 
 - name: Unpack other data
   unarchive:
