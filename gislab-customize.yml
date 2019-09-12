@@ -18,7 +18,7 @@
     root_dir: /opt/gislab/system/clients/desktop/root
 
   roles:
-    #- { role: server-firewall, tags: ['server-firewall'] }
+    - { role: server-firewall, tags: ['server-firewall'] }
     - { role: server-accounts, tags: ['server-accounts'] }
     - { role: server-data-cleanup, tags: ['server-data-cleanup'] }
     - { role: server-data-db, tags: ['server-data-db']}
