@@ -3,10 +3,7 @@
 
 create_schema() {
     if [ ! -z `sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -w $1` ]; then
-        echo "CREATE SCHEMA $GISLAB_USER;
-GRANT USAGE on SCHEMA $GISLAB_USER to $GISLAB_USER;
-GRANT SELECT ON ALL TABLES IN SCHEMA $GISLAB_USER TO $GISLAB_USER;
-GRANT all ON SCHEMA $GISLAB_USER to $GISLAB_USER" | \
+        echo "CREATE SCHEMA $GISLAB_USER AUTHORIZATION $GISLAB_USER" | \
             sudo -u postgres psql $1
     fi
 }
@@ -18,5 +15,3 @@ users=`sudo gislab-listusers -g gismentors | grep 'uid:' | cut -d':' -f2`
 if [[ $users =~ $GISLAB_USER ]]; then 
     create_schema gismentors
 fi
-  
-exit 0

@@ -14,5 +14,3 @@ users=`sudo gislab-listusers -g gismentors | grep 'uid:' | cut -d':' -f2`
 if [[ $users =~ $GISLAB_USER ]]; then 
     drop_schema gismentors
 fi
-
-exit 0
