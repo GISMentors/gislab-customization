@@ -1,10 +1,5 @@
 # Create gismentors database
 
-- name: Download gismentors dump
-  get_url:
-    url: "http://training.gismentors.eu/geodata/postgis/{{ dbname }}.dump"
-    dest: "/mnt/repository/{{ dbname }}.dump"
-
 - name: Clone dataset repository
   git:
     repo: https://github.com/GISMentors/dataset.git
@@ -15,36 +10,53 @@
     repo: https://github.com/GISMentors/gislab-customization.git
     dest: "{{ home_dir }}/gislab-customization"
 
-- name: Create database gismentors
+- name: Create template database
   postgresql_db:
-    name: "{{ dbname }}"
+    name: "{{ dbname_template }}"
     login_user: postgres
-  register: db_created
+  register: db_template_created
 
-- name: Import data into gismentors database
-  shell: pg_restore "/mnt/repository/{{ dbname }}.dump" | psql -U postgres "{{ dbname }}"
-  when:
-    db_created.changed
+- name: Add postgis extension to template database
+  postgresql_ext:
+    db: "{{ dbname_template }}"
+    name: postgis
 
 - name: Download EPSG 5514 code definiton
   get_url:
     url: http://epsg.io/5514-1623.sql
     dest: /tmp/5514-1623.sql 
   when:
-    db_created.changed
+    db_template_created.changed
     
 - name: Drop existing EPSG 5514 definition
-  shell: psql -U postgres "{{ dbname }}" -c "delete from spatial_ref_sys where srid = 5514"
+  shell: psql -U postgres "{{ dbname_template }}" -c "delete from spatial_ref_sys where srid = 5514"
   when:
-    db_created.changed
+    db_template_created.changed
 
-- name: Insert new EPSG 5514 defintion
-  shell: psql -U postgres "{{ dbname }}" -f /tmp/5514-1623.sql
+- name: Insert new EPSG 5514 definition
+  shell: psql -U postgres "{{ dbname_template }}" -f /tmp/5514-1623.sql
   when:
-    db_created.changed
+    db_template_created.changed
 
 - name: Grant privileges on gismentors database
-  shell: "{{ home_dir }}/gislab-customization/utils/privileges.sh"
+  shell: "{{ home_dir }}/gislab-customization/utils/privileges.sh {{ dbname_template }}"
+  when:
+    db_template_created.changed
+
+- name: Download gismentors dump
+  get_url:
+    url: "http://training.gismentors.eu/geodata/postgis/{{ dbname }}.dump"
+    dest: "/mnt/repository/{{ dbname }}.dump"
+
+- name: Create gismentors database
+  postgresql_db:
+    name: "{{ dbname }}"
+    login_user: postgres
+    template: "{{ dbname_template }}"
+  register: db_created
+
+- name: Import data into gismentors database
+  shell: pg_restore "/mnt/repository/{{ dbname }}.dump" | psql -U postgres "{{ dbname }}"
   when:
     db_created.changed
 

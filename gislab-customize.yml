@@ -5,6 +5,7 @@
 
   vars:
     # service-data-db
+    dbname_template: template5514
     dbname: gismentors
     home_dir: /mnt/home/gislab
     data_dir: /mnt/repository/gismentors
