@@ -38,11 +38,6 @@
   when:
     db_template_created.changed
 
-- name: Grant privileges on gismentors database
-  shell: "{{ home_dir }}/gislab-customization/utils/privileges.sh {{ dbname_template }}"
-  when:
-    db_template_created.changed
-
 - name: Download gismentors dump
   get_url:
     url: "http://training.gismentors.eu/geodata/postgis/{{ dbname }}.dump"
@@ -57,6 +52,11 @@
 
 - name: Import data into gismentors database
   shell: pg_restore "/mnt/repository/{{ dbname }}.dump" | psql -U postgres "{{ dbname }}"
+  when:
+    db_created.changed
+
+- name: Grant privileges on gismentors database
+  shell: "{{ home_dir }}/gislab-customization/utils/privileges.sh {{ dbname }}"
   when:
     db_created.changed
 
