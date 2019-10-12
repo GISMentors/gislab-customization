@@ -53,6 +53,12 @@
   when:
     datadir.changed
 
+- name: Download VFK data
+  unarchive:
+    src: https://www.cuzk.cz/Katastr-nemovitosti/Poskytovani-udaju-z-KN/Vymenny-format-KN/Vymenny-format-NVF/exportvse.aspx
+    dest: "{{ data_dir }}"
+    remote_src: yes
+
 - name: Set up ownership for data directory
   file:
     path: "{{ data_dir }}"
