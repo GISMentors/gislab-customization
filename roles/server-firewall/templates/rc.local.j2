@@ -11,6 +11,6 @@
 #
 # By default this script does nothing.
 
-iptables -A OUTPUT -s 147.32.131.152 -d 0.0.0.0/0 -p udp --sport 123 -m length --length 129: -j DROP
+iptables -A OUTPUT -s {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }} -d 0.0.0.0/0 -p udp --sport 123 -m length --length 129: -j DROP
 
 exit 0
