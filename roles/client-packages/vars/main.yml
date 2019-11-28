@@ -6,6 +6,8 @@ packages:
   - jupyter-notebook
   - python-tk
   - software-properties-common
+  # GeoServer 2.14
+  - openjdk-8-jre
 
 packages_stats:
   - r-base

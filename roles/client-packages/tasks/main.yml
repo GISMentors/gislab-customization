@@ -63,6 +63,11 @@
     executable: /bin/bash
   tags: ['client-packages-stats']
 
+- name: Download GeoServer executable
+  get_url:
+    url: http://sourceforge.net/projects/geoserver/files/GeoServer/2.14.4/geoserver-2.14.4-bin.zip
+    dest: /mnt/repository/gismentors
+
 # - name: Remove unused packages
 #   shell: >
 #     export DEBIAN_FRONTEND=noninteractive
