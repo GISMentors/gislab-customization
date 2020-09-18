@@ -10,7 +10,7 @@
     - "{{ data_dir }}/csv"
   register: datadir
 
-- name: Download DMT file
+- name: Download DTM file
   unarchive:
     src: http://training.gismentors.eu/geodata/eu-dem/dmt100.zip
     dest: "{{ data_dir }}"
