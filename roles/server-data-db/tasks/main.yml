@@ -1,5 +1,8 @@
 # Create gismentors database
 
+- name: Silence git warnings
+  shell: git config --global --add safe.directory '*'
+
 - name: Clone dataset repository
   git:
     repo: https://github.com/GISMentors/dataset.git
