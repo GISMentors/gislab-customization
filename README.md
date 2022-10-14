@@ -7,7 +7,7 @@ GIS.lab: http://gislab-npo.github.io/gislab/
 ### Physical
 
 ```sh
-ansible-playbook -inventory-file=gislab-unit-gismentors.inventory \
+ansible-playbook --inventory-file=gislab-unit-gismentors.inventory \
    --private-key=/path/to/your/private/key \
    gislab-customize.yml
 ```
