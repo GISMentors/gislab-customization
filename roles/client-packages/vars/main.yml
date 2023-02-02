@@ -1,20 +1,16 @@
 packages:
   - exiftool
-  - python-virtualenv
-  - python3-virtualenv
-  - python-rpy2
+  - python3-rpy2
   - jupyter-notebook
-  - python-tk
+  - python3-tk
   - software-properties-common
-  # GeoServer 2.14
-  - openjdk-8-jre
+  # GeoServer
+  - openjdk-11-jre
 
 packages_stats:
   - r-base
-  - gdebi-core
 
-rstudio_url: https://download1.rstudio.org
-rstudio_pkg: rstudio-xenial-1.1.463-amd64.deb
+rstudio_url: https://download1.rstudio.org/electron/jammy/amd64
+rstudio_pkg: rstudio-2022.12.0-353-amd64.deb
 
 apt_get_opts: "--assume-yes --force-yes"
-gdebi_get_opts: "--non-interactive"

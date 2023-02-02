@@ -22,4 +22,4 @@
     state: absent
   with_items:
     - "{{ repository_grassdata }}"
-    - "{{ user_grassdata }}"
+    - "{{ grass_data_dir }}"

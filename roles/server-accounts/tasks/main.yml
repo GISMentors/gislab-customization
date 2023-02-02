@@ -60,7 +60,7 @@
 
 - name: Update grassdata rc file
   replace:
-    dest: /opt/gislab/system/accounts/skel/.grass7/rc
+    dest: "{{ grass_config_dir }}/rc"
     regexp: '\.grassdata'
     replace: 'grassdata'
   when: grassdata_stat.stat.exists

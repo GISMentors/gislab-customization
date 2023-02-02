@@ -8,7 +8,7 @@
     apt update
     &&
     chroot {{ root_dir }}
-    apt {{ apt_get_opts }} install {{ packages|join(' ') }}
+    apt-get {{ apt_get_opts }} install {{ packages|join(' ') }}
   args:
     executable: /bin/bash
 
@@ -17,7 +17,7 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    apt {{ apt_get_opts }} install {{ packages_stats|join(' ') }}
+    apt-get {{ apt_get_opts }} install {{ packages_stats|join(' ') }}
   args:
     executable: /bin/bash
   tags: ['client-packages-stats']
@@ -34,7 +34,7 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    gdebi {{ gdebi_get_opts }} /var/cache/apt/archives/{{ rstudio_pkg }}
+    apt-get {{ apt_get_opts }} install /var/cache/apt/archives/{{ rstudio_pkg }}
   args:
     executable: /bin/bash
   tags: ['client-packages-stats']
@@ -69,11 +69,11 @@
     url: https://training.gismentors.eu/gislab-packages/geoserver-2.16.5-bin.zip
     dest: /mnt/repository/gismentors
 
-# - name: Remove unused packages
-#   shell: >
-#     export DEBIAN_FRONTEND=noninteractive
-#     &&
-#     chroot {{ root_dir }}
-#     apt {{ apt_get_opts }} autoremove
-#   args:
-#     executable: /bin/bash
+- name: Remove unused packages
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    apt-get {{ apt_get_opts }} autoremove
+  args:
+    executable: /bin/bash

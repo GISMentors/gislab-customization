@@ -8,7 +8,7 @@
     
 - name: Download GRASS locations
   get_url:
-    url: "{{ data_url }}/{{ item}}.zip"
+    url: "{{ grass_data_url }}/{{ item}}.zip"
     dest: "{{ repository_grassdata }}/{{ item }}.zip"
   with_items:
     - gismentors
@@ -44,7 +44,7 @@
 
 - name: Create user GRASS location
   file: 
-    path: "{{ user_grassdata}}/{{grass_location }}"
+    path: "{{ grass_data_dir}}/{{grass_location }}"
     state: directory
   register:
     gismentors_loc
@@ -52,7 +52,7 @@
 - name: Link GRASS mapsets 
   file:
     src: "{{ repository_grassdata }}/{{ grass_location}}/{{ item }}"
-    dest: "{{ user_grassdata }}/{{ grass_location }}/{{ item }}"
+    dest: "{{ grass_data_dir }}/{{ grass_location }}/{{ item }}"
     state: link
   with_items:
     - PERMANENT
@@ -65,23 +65,23 @@
   when: gismentors_loc.changed
 
 - name: Create gislab mapset
-  command: cp -r "{{ repository_grassdata }}/{{ grass_location }}/user1" "{{ user_grassdata }}/{{ grass_location }}/gislab"
+  command: cp -r "{{ repository_grassdata }}/{{ grass_location }}/user1" "{{ grass_data_dir }}/{{ grass_location }}/gislab"
   when: gismentors_loc.changed
 
 # - name: Update search path (gislab mapset)
 #   replace:
-#     dest: "{{ user_grassdata }}/{{ grass_location }}/gislab/SEARCH_PATH"
+#     dest: "{{ grass_data_dir }}/{{ grass_location }}/gislab/SEARCH_PATH"
 #     regexp: "user1"
 #     replace: "gislab"
 #   when: gismentors_loc.changed
 
 - name: Configure GRASS
   template:
-    src: grass7/bashrc.j2
-    dest: "{{ config_dir }}/bashrc"
+    src: grass8/bashrc.j2
+    dest: "{{ grass_config_dir }}/bashrc"
 
 - name: Set default GRASS location
   replace:
-    dest: "{{ config_dir }}/rc"
+    dest: "{{ grass_config_dir }}/rc"
     regexp: "world"
     replace: "gismentors"
