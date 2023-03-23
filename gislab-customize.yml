@@ -26,7 +26,6 @@
     - { role: server-data-db, tags: ['server-data-db']}
     - { role: server-data-grass, tags: ['server-data-grass'] }
     - { role: server-data-other, tags: ['server-data-other'] }
-    - { role: client-desktop, tags: ['client-desktop'] }
     - { role: client-packages, tags: ['client-packages'] }
     - { role: client-image, tags: ['client-image'] }
     - { role: user-accounts, tags: ['user-accounts'] }
