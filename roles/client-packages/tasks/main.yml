@@ -5,7 +5,7 @@
     export DEBIAN_FRONTEND=noninteractive
     &&
     chroot {{ root_dir }}
-    apt update
+    apt-get update
     &&
     chroot {{ root_dir }}
     apt-get {{ apt_get_opts }} install {{ packages|join(' ') }}
@@ -69,11 +69,12 @@
     url: https://training.gismentors.eu/gislab-packages/geoserver-2.16.5-bin.zip
     dest: /mnt/repository/gismentors
 
-- name: Remove unused packages
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
-    chroot {{ root_dir }}
-    apt-get {{ apt_get_opts }} autoremove
-  args:
-    executable: /bin/bash
+# - name: Remove unused packages
+#   shell: >
+#     export DEBIAN_FRONTEND=noninteractive
+#     &&
+#     chroot {{ root_dir }}
+#     apt-get {{ apt_get_opts }} autoremove
+#   args:
+#     executable: /bin/bash
+

@@ -1,0 +1,34 @@
+# Install Nvidia drivers on client
+
+- name: Check if we are running GIS.lab Unit
+  shell: grep GISLAB_UNIQUE_ID /etc/gislab_version
+  register: gislab_unit
+  changed_when: no
+
+- name: Add Graphics Drivers PPA repository
+  lineinfile:
+    path: "{{ root_dir }}/etc/apt/sources.list"
+    line: "deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main"
+
+- name: Add apt key for Graphics Drivers PPA repository
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2388FF3BE10A76F638F80723FCAE110B1118213C
+
+- name: Install nvidia packages
+  shell: >
+    export DEBIAN_FRONTEND=noninteractive
+    &&
+    chroot {{ root_dir }}
+    apt-get update
+    &&
+    chroot {{ root_dir }}
+    apt-get {{ apt_get_opts }} install {{ item }} || apt-get upgrade
+  args:
+    executable: /bin/bash
+  with_items:
+    - nvidia-driver-396
+  when:
+    gislab_unit.rc == 0
