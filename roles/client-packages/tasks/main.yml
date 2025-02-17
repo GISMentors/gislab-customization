@@ -1,5 +1,21 @@
 # Client packages installation
 
+- name: Mount /dev/pts and /proc
+  command: >
+    chroot {{ root_dir }}
+    mount {{ item.opts }} {{ item.src }} {{ item.dest }}
+  with_items:
+    - {
+        src: "devpts",
+        dest: "/dev/pts",
+        opts: "-t devpts -o rw,noexec,nosuid,gid=5,mode=620"
+      }
+    - {
+        src: "proc",
+        dest: "/proc",
+        opts: "-t proc"
+      }
+
 - name: Install custom GIS packages
   shell: >
     export DEBIAN_FRONTEND=noninteractive
@@ -78,3 +94,11 @@
 #   args:
 #     executable: /bin/bash
 
+# umount filesystems mounted inside chroot -always mount /dev/pts before /proc !
+- name: Umount devices inside chroot
+  command: >
+    chroot {{ root_dir }}
+    umount {{ item }}
+  with_items:
+    - /dev/pts
+    - /proc

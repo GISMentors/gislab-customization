@@ -26,7 +26,7 @@
 
 - name: Download EPSG 5514 code definiton
   get_url:
-    url: http://epsg.io/5514-1623.sql
+    url: https://epsg.io/5514-1623.sql
     dest: /tmp/5514-1623.sql 
   when:
     db_template_created.changed
@@ -43,7 +43,7 @@
 
 - name: Download gismentors dump
   get_url:
-    url: "http://training.gismentors.eu/geodata/postgis/{{ dbname }}.dump"
+    url: "https://training.gismentors.eu/geodata/postgis/{{ dbname }}.dump"
     dest: "/mnt/repository/{{ dbname }}.dump"
 
 - name: Create gismentors database

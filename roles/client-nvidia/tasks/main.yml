@@ -5,17 +5,33 @@
   register: gislab_unit
   changed_when: no
 
-- name: Add Graphics Drivers PPA repository
-  lineinfile:
-    path: "{{ root_dir }}/etc/apt/sources.list"
-    line: "deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main"
-
-- name: Add apt key for Graphics Drivers PPA repository
-  shell: >
-    export DEBIAN_FRONTEND=noninteractive
-    &&
+- name: Mount /dev/pts and /proc
+  command: >
     chroot {{ root_dir }}
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2388FF3BE10A76F638F80723FCAE110B1118213C
+    mount {{ item.opts }} {{ item.src }} {{ item.dest }}
+  with_items:
+    - {
+        src: "devpts",
+        dest: "/dev/pts",
+        opts: "-t devpts -o rw,noexec,nosuid,gid=5,mode=620"
+      }
+    - {
+        src: "proc",
+        dest: "/proc",
+        opts: "-t proc"
+      }
+  
+# - name: Add Graphics Drivers PPA repository
+#   lineinfile:
+#     path: "{{ root_dir }}/etc/apt/sources.list"
+#     line: "deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main"
+
+# - name: Add apt key for Graphics Drivers PPA repository
+#   shell: >
+#     export DEBIAN_FRONTEND=noninteractive
+#     &&
+#     chroot {{ root_dir }}
+#     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2388FF3BE10A76F638F80723FCAE110B1118213C
 
 - name: Install nvidia packages
   shell: >
@@ -32,3 +48,13 @@
     - nvidia-driver-550
   when:
     gislab_unit.rc == 0
+
+# umount filesystems mounted inside chroot -always mount /dev/pts before /proc !
+- name: Umount devices inside chroot
+  command: >
+    chroot {{ root_dir }}
+    umount {{ item }}
+  with_items:
+    - /dev/pts
+    - /proc
+    

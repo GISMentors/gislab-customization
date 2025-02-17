@@ -27,6 +27,7 @@
     - { role: server-data-grass, tags: ['server-data-grass'] }
     - { role: server-data-other, tags: ['server-data-other'] }
     - { role: client-packages, tags: ['client-packages'] }
+    - { role: client-nvidia, tags: ['client-nvidia'] }
     - { role: client-image, tags: ['client-image'] }
     - { role: user-accounts, tags: ['user-accounts'] }
     - { role: customization-done, tags: ['customization-done'] }
