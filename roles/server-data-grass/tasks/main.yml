@@ -80,8 +80,8 @@
     src: grass8/bashrc.j2
     dest: "{{ grass_config_dir }}/bashrc"
 
-- name: Set default GRASS location
-  replace:
-    dest: "{{ grass_config_dir }}/rc"
-    regexp: "world"
-    replace: "gismentors"
+# - name: Set default GRASS location
+#   replace:
+#     dest: "{{ grass_config_dir }}/rc"
+#     regexp: "world"
+#     replace: "gismentors"

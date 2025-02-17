@@ -3,14 +3,14 @@ packages:
   - python3-rpy2
   - jupyter-notebook
   - python3-tk
-  - software-properties-common
   # GeoServer
-  - openjdk-11-jre
+  - openjdk-17-jre
 
 packages_stats:
   - r-base
 
+# noble doesn't exists (???)
 rstudio_url: https://download1.rstudio.org/electron/jammy/amd64
-rstudio_pkg: rstudio-2022.12.0-353-amd64.deb
+rstudio_pkg: rstudio-2024.12.1-563-amd64.deb
 
 apt_get_opts: "--assume-yes --force-yes"
