@@ -29,6 +29,6 @@
   args:
     executable: /bin/bash
   with_items:
-    - nvidia-driver-396
+    - nvidia-driver-550
   when:
     gislab_unit.rc == 0
