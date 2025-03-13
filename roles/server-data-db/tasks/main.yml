@@ -54,7 +54,7 @@
   register: db_created
 
 - name: Import data into gismentors database
-  shell: pg_restore "/mnt/repository/{{ dbname }}.dump" | psql -U postgres "{{ dbname }}"
+  shell: pg_restore -U postgres -d "{{ dbname }}" "/mnt/repository/{{ dbname }}.dump"
   when:
     db_created.changed
 
