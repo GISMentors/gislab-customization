@@ -1,7 +1,6 @@
 packages:
   - exiftool
   - python3-rpy2
-  - jupyter-notebook
   - python3-tk
   # GeoServer
   - openjdk-17-jre
