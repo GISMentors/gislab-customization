@@ -67,21 +67,3 @@
 - name: Create gislab mapset
   command: cp -r "{{ repository_grassdata }}/{{ grass_location }}/user1" "{{ grass_data_dir }}/{{ grass_location }}/gislab"
   when: gismentors_loc.changed
-
-# - name: Update search path (gislab mapset)
-#   replace:
-#     dest: "{{ grass_data_dir }}/{{ grass_location }}/gislab/SEARCH_PATH"
-#     regexp: "user1"
-#     replace: "gislab"
-#   when: gismentors_loc.changed
-
-- name: Configure GRASS
-  template:
-    src: grass8/bashrc.j2
-    dest: "{{ grass_config_dir }}/bashrc"
-
-# - name: Set default GRASS location
-#   replace:
-#     dest: "{{ grass_config_dir }}/rc"
-#     regexp: "world"
-#     replace: "gismentors"
