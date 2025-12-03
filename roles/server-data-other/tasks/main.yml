@@ -12,7 +12,7 @@
 
 - name: Download DTM file
   unarchive:
-    src: http://training.gismentors.eu/geodata/eu-dem/dmt100.zip
+    src: https://gismentors.cz/geodata/eu-dem/dmt100.zip
     dest: "{{ data_dir }}"
     remote_src: yes
 
@@ -35,7 +35,7 @@
 
 - name: Download geopython data
   unarchive:
-    src: http://training.gismentors.eu/geodata/geopython/data.tgz
+    src: https://gismentors.cz/geodata/geopython/data.tgz
     dest: "{{ data_dir }}/geopython"
     remote_src: yes
 

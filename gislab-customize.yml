@@ -13,7 +13,7 @@
     # service-data-grass
     repository_grassdata: /mnt/repository/grassdata
     grass_data_dir: /opt/gislab/system/accounts/skel/grassdata
-    grass_data_url: http://training.gismentors.eu/geodata/grass
+    grass_data_url: https://gismentors.cz/geodata/grass
     grass_config_dir: /opt/gislab/system/accounts/skel/.grass8
     grass_location: gismentors
     # client

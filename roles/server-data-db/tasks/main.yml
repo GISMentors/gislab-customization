@@ -43,7 +43,7 @@
 
 - name: Download gismentors dump
   get_url:
-    url: "https://training.gismentors.eu/geodata/postgis/{{ dbname }}.dump"
+    url: "https://gismentors.cz/geodata/postgis/{{ dbname }}.dump"
     dest: "/mnt/repository/{{ dbname }}.dump"
 
 - name: Create gismentors database
